@@ -4,6 +4,8 @@ import { Token, UserInfo } from "@chat/common";
 import { generateAccessToken } from "middlewares/authToken";
 import { ErrorServer } from "types";
 
+const tableName = "common.users";
+
 export const loginController = async (body: { email: string; password?: string | undefined }): Promise<Token> => {
 	const { email, password } = body;
 	logger.info("@loginControllers", email);
@@ -13,10 +15,10 @@ export const loginController = async (body: { email: string; password?: string |
 			SELECT 
 				*
 			FROM 
-				common.users
+				??
 			WHERE
 				email=? AND password=?;`,
-		[email, password ? password : ""]
+		[tableName, email, password ? password : ""]
 	);
 
 	if (!results.rows.length) throw new ErrorServer(404, "No user found");

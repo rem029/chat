@@ -2,11 +2,10 @@ import express, { Express } from "express";
 import cors from "cors";
 
 import { v1Router } from "routes/v1";
-import { v2Router } from "routes/v2";
 import { RequestWithMetrics } from "types";
 import { errorHandler } from "../handlers";
 
-const initializeAppExpress = (): Express => {
+const initializeExpress = (): Express => {
 	const app = express();
 
 	const corsOptions = {
@@ -26,11 +25,10 @@ const initializeAppExpress = (): Express => {
 		next();
 	});
 
-	app.use("/", v1Router);
-	app.use("/v2", v2Router);
+	app.use("/v1", v1Router);
 	app.use(errorHandler);
 
 	return app;
 };
 
-export const app = initializeAppExpress();
+export const app = initializeExpress();

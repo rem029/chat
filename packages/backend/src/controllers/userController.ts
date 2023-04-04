@@ -3,6 +3,8 @@ import { UserInfo } from "@chat/common";
 import { logger } from "utilities/logger";
 import { ErrorServer } from "types";
 
+const tableName = "common.users";
+
 export const getUserMeInfoController = async (body: { email: string }): Promise<UserInfo> => {
 	const { email } = body;
 	logger.info("@getUserInfoController");
@@ -12,10 +14,10 @@ export const getUserMeInfoController = async (body: { email: string }): Promise<
 			SELECT 
 				*
 			FROM 
-				common.users
+				??
 			WHERE
 				email=?;`,
-		[email]
+		[tableName, email]
 	);
 
 	if (!results.rows.length) throw new ErrorServer(400, "No user found");
@@ -32,10 +34,10 @@ export const getUserInfoController = async (): Promise<UserInfo[]> => {
 			SELECT 
 				*
 			FROM 
-				common.users
+				??
 			ORDER BY
 				created_at DESC`,
-		[]
+		[tableName]
 	);
 
 	const response = results.rows as UserInfo[];

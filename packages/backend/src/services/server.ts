@@ -1,6 +1,6 @@
 import http from "http";
 import { logger } from "utilities/logger";
-import { app } from "./app";
+import { app } from "./express";
 
 const initializeHttpServer = (): http.Server => {
 	const httpServer = http.createServer(app);
