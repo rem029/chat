@@ -1,7 +1,7 @@
 {
 	"name": "@chat/backend",
 	"description": "Backend for store project",
-	"version": "0.0.0-alpha.1",
+	"version": "0.0.0-alpha.2",
 	"main": "src/index.js",
 	"private": true,
 	"scripts": {
@@ -19,7 +19,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@chat/common": "^0.0.0-alpha.1",
+		"@chat/common": "^0.0.0-alpha.2",
 		"@types/jsonwebtoken": "^8.5.8",
 		"@types/knex": "^0.16.1",
 		"@types/node-statsd": "^0.1.3",

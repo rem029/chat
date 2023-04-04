@@ -1,7 +1,7 @@
 {
 	"name": "@chat/frontend",
 	"description": "Frontend for store project",
-	"version": "0.0.0-alpha.1",
+	"version": "0.0.0-alpha.2",
 	"private": true,
 	"scripts": {
 		"start": "react-scripts start",
