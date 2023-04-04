@@ -14,7 +14,7 @@
     "clean": "lerna clean",
     "start": "lerna run start --parallel --scope @chat/*",
     "start:staging": "lerna run build:run --parallel --scope @chat/backend",
-    "start:pm2:staging": "pm2 start server.sh --interpreter=bash --name=store-app-staging",
+    "start:pm2:staging": "pm2 start server.sh --interpreter=bash --name=chat-app-staging",
     "build": "lerna run build --parallel --scope @chat/*",
     "build:frontend": "lerna run build --scope @chat/frontend",
     "build:backend": "lerna run build --scope @chat/backend",

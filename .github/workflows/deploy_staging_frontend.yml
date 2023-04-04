@@ -32,7 +32,7 @@ jobs:
         with:
           envkey_PORT: 1360
           envkey_REACT_APP_API_URL: "https://api.chat.rem029.com"
-          envkey_REACT_APP_APP_NAME: "store"
+          envkey_REACT_APP_APP_NAME: "CHAT"
           directory: 'packages/frontend/'
           file_name: .env
           fail_on_empty: false
