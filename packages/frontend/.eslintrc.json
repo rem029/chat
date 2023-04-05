@@ -4,8 +4,10 @@
 		"es2021": true
 	},
 	"extends": [
+		"plugin:react/recommended",
 		"eslint:recommended",
-		"plugin:react/recommended"
+		"plugin:react/jsx-runtime",
+		"plugin:@typescript-eslint/recommended"
 	  ],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
@@ -28,7 +30,12 @@
 		],
 		"no-mixed-spaces-and-tabs": 0,
 		"react/jsx-no-undef": [0],
-		"@typescript-eslint/explicit-function-return-type": "off"
+		"@typescript-eslint/explicit-function-return-type": [
+			"error",
+			{
+				"allowExpressions": true
+			}
+		]
 	},"globals": {
 		"JSX": true
 	}

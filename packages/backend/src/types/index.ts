@@ -10,9 +10,9 @@ export interface RequestAuthInterface extends RequestWithMetrics {
 }
 
 export interface ResponseInterface<T> {
+	__typename?: string;
 	success: boolean;
 	message: string;
-	__typename?: string;
 	data?: T;
 	errorMessage?: string;
 }

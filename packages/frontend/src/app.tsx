@@ -1,14 +1,14 @@
-import React from "react";
 import logo from "./logo.svg";
-import { Counter } from "./features/counter/Counter";
 import "./app.css";
+import Login from "components/user/login";
 
 function App(): JSX.Element {
 	return (
 		<div className="App">
 			<header className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
-				<Counter />
+
+				<Login />
 				<p>
 					Edit <code>src/App.tsx</code> and save to reload.
 				</p>
