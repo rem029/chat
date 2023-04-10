@@ -1,8 +1,9 @@
 import express, { Router } from "express";
 import { handleServerResponse, routerWrapper } from "../../handlers";
 import { RequestAuthInterface } from "../../types";
-import { getUserMeInfoController, getUserInfoController } from "../../controllers/userController";
+import { getUserMeInfoController, getUserInfoController, addUserController } from "../../controllers/userController";
 import { authenticateToken } from "../../middlewares/authToken";
+import { parseBody } from "helpers/parseBody";
 
 const initializeRouter = (): Router => {
 	const router = express.Router();
@@ -33,6 +34,21 @@ const initializeRouter = (): Router => {
 				__typename: response[0].__typename,
 				success: true,
 				message: "Get user info success",
+				data: response,
+			});
+		})
+	);
+
+	router.post(
+		"/register",
+		routerWrapper("registerRoute", async (req, res, _) => {
+			const fields = parseBody<{ username: string; password: string }>("registerRoute", req.body, req.headers);
+			const response = await addUserController(fields.username, fields.password);
+
+			handleServerResponse(res, req, 200, {
+				__typename: "UserInfo",
+				success: true,
+				message: "Register user success.",
 				data: response,
 			});
 		})

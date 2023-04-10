@@ -4,6 +4,7 @@ import { getAllMessagesByRoomID, createMessage, updateMessageById } from "../../
 import { authenticateToken } from "../../middlewares/authToken";
 import { Message } from "@chat/common";
 import { parseBody } from "../../helpers/parseBody";
+import { addUserController } from "controllers/userController";
 
 const initializeRouter = (): Router => {
 	const router = express.Router();
