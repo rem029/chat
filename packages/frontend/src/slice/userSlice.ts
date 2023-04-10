@@ -15,7 +15,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-	userInfo: {} as UserInfo,
+	userInfo: undefined,
 	status: "idle",
 };
 
@@ -36,16 +36,12 @@ export const loginAsync = createAsyncThunk(
 		saveToken(tokenResponse.data.data.token);
 		const token = getToken();
 
-		console.log("token", token);
-
 		const userInfoResponse = await axios(URL_USER_INFO, {
 			method: "GET",
 			headers: {
 				Authorization: `Token ${token}`,
 			},
 		});
-
-		console.log("userInfoResponse", userInfoResponse);
 
 		return userInfoResponse.data.data as UserInfo;
 	}
@@ -64,7 +60,9 @@ export const userSlice = createSlice({
 		builder
 			.addCase(loginAsync.pending, (state) => {
 				state.status = "loading";
+				state.userInfo = undefined;
 				state.error = "";
+				deleteToken();
 			})
 			.addCase(loginAsync.fulfilled, (state, action) => {
 				state.status = "idle";
@@ -73,7 +71,11 @@ export const userSlice = createSlice({
 			})
 			.addCase(loginAsync.rejected, (state, action) => {
 				state.status = "failed";
-				state.error = action.error.message;
+				state.error = action.error.message?.includes("404")
+					? "Username or password invalid."
+					: action.error.message;
+
+				deleteToken();
 			});
 	},
 });

@@ -1,57 +1,19 @@
-import logo from "./logo.svg";
-import "./app.css";
+import { MainContainer } from "components/ui/container/main";
 import Login from "components/user/login";
+import "index.css";
+import { HomePage } from "pages/home";
+import { getUserState } from "slice/userSlice";
+import { useAppSelector } from "store/hooks";
 
 function App(): JSX.Element {
+	const userState = useAppSelector(getUserState);
 	return (
-		<div className="App">
-			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-
-				<Login />
-				<p>
-					Edit <code>src/App.tsx</code> and save to reload.
-				</p>
-				<span>
-					<span>Learn </span>
-					<a
-						className="App-link"
-						href="https://reactjs.org/"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						React
-					</a>
-					<span>, </span>
-					<a
-						className="App-link"
-						href="https://redux.js.org/"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Redux
-					</a>
-					<span>, </span>
-					<a
-						className="App-link"
-						href="https://redux-toolkit.js.org/"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Redux Toolkit
-					</a>
-					,<span> and </span>
-					<a
-						className="App-link"
-						href="https://react-redux.js.org/"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						React Redux
-					</a>
-				</span>
-			</header>
-		</div>
+		<MainContainer>
+			<>
+				{userState.userInfo && <HomePage />}
+				{!userState.userInfo && <Login />}
+			</>
+		</MainContainer>
 	);
 }
 

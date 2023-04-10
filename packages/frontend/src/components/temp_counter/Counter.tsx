@@ -8,7 +8,7 @@ import {
 	incrementAsync,
 	incrementIfOdd,
 	selectCount,
-} from "../../slice/counterSlice";
+} from "../../slice/temp_counterSlice";
 import styles from "./Counter.module.css";
 
 export const Counter: React.FC = () => {
