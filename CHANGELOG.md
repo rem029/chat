@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.0.0-alpha.5](https://github.com/rem029/chat/compare/v0.0.0-alpha.4...v0.0.0-alpha.5) (2023-04-10)
+
+
+### Features
+
+* **BACKEND:** register user route added ([2b0f428](https://github.com/rem029/chat/commit/2b0f428bf45286e1b2cbc0871ce02f2d10c20fc8))
+
+
+
+
+
 # [0.0.0-alpha.4](https://github.com/rem029/chat/compare/v0.0.0-alpha.3...v0.0.0-alpha.4) (2023-04-10)
 
 **Note:** Version bump only for package @chat/chat
