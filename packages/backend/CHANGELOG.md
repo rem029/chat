@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.0.0-alpha.6](https://github.com/rem029/chat/compare/v0.0.0-alpha.5...v0.0.0-alpha.6) (2023-04-12)
+
+
+### Features
+
+* **FRONTEND_BACKEND:** chats are initially working ([8c71290](https://github.com/rem029/chat/commit/8c71290d001db068919714537038599cd716c6db))
+
+
+
+
+
 # [0.0.0-alpha.5](https://github.com/rem029/chat/compare/v0.0.0-alpha.4...v0.0.0-alpha.5) (2023-04-10)
 
 
