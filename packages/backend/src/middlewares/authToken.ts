@@ -2,10 +2,10 @@ import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
 import { logger } from "utilities/logger";
 import { UserInfo, Token } from "@chat/common";
-import { ErrorServer, RequestAuthInterface } from "types";
+import { ErrorServer, RequestAuthInterface, SocketAuthInterface, SocketNext } from "types";
 
 export const generateAccessToken = (payload: object, expiresIn = "24h"): Token => {
-	console.log("@generateAccessToken", payload);
+	logger.info(`@generateAccessToken ${payload}`);
 	return {
 		token: jwt.sign(payload, process.env.API_TOKEN_SECRET as jwt.Secret, {
 			expiresIn: expiresIn,
@@ -23,25 +23,41 @@ export const generateRefreshToken = (payload: object, expiresIn = "1y"): Token =
 	};
 };
 
-export const decodeToken = (token: string): string | jwt.JwtPayload =>
-	jwt.verify(token, process.env.API_TOKEN_SECRET as jwt.Secret);
+export const decodeToken = (token: string): UserInfo =>
+	jwt.verify(token, process.env.API_TOKEN_SECRET as jwt.Secret) as UserInfo;
 
-export const authenticateToken = (req: RequestAuthInterface, res: Response, next: NextFunction): void => {
+export const authenticateTokenRoute = (req: RequestAuthInterface, _res: Response, next: NextFunction): void => {
 	logger.info("@middleware authenticateToken");
-	const tokenFromHeader = req.headers["authorization"];
-	const token = tokenFromHeader && tokenFromHeader.split(" ")[1];
-
-	if (!token) {
-		throw new ErrorServer(403, "A token is required for authentication.");
-	}
 
 	try {
-		const decodedUser = decodeToken(token) as UserInfo;
+		const tokenFromHeader = req.headers["authorization"];
+		const token = tokenFromHeader && tokenFromHeader.split(" ")[1];
+
+		if (!token) throw new ErrorServer(403, "A token is required for authentication.");
+
+		const decodedUser = decodeToken(token);
 		logger.info(`@middleware authenticateToken decoded userId: ${decodedUser.email}`);
-		req.user = { email: decodedUser.email };
+		req.user = decodedUser;
+		next();
 	} catch (error) {
 		logger.error(`@middleware authenticateToken error: ${JSON.stringify(error)}`);
 		next(new ErrorServer(401, "Token has expired or invalid."));
 	}
-	next();
+};
+
+export const authenticateTokenSocket = (socket: SocketAuthInterface, next: SocketNext): void => {
+	logger.info("@middleware authenticateTokenSocket");
+
+	try {
+		const token = socket.handshake.auth.token;
+
+		if (!token) throw new ErrorServer(403, "A token is required for authentication.");
+
+		const decodedUser = decodeToken(token);
+		socket.user = decodedUser;
+		next();
+	} catch (error) {
+		logger.error(`@middleware authenticateTokenSocket error: ${JSON.stringify(error)}`);
+		next(new ErrorServer(401, "Token has expired or invalid."));
+	}
 };

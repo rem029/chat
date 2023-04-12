@@ -2,7 +2,7 @@ import express, { Router } from "express";
 import { handleServerResponse, routerWrapper } from "../../handlers";
 import { RequestAuthInterface } from "../../types";
 import { getUserMeInfoController, getUserInfoController, addUserController } from "../../controllers/userController";
-import { authenticateToken } from "../../middlewares/authToken";
+import { authenticateTokenRoute } from "../../middlewares/authToken";
 import { parseBody } from "helpers/parseBody";
 
 const initializeRouter = (): Router => {
@@ -10,7 +10,7 @@ const initializeRouter = (): Router => {
 
 	router.get(
 		"/me",
-		authenticateToken,
+		authenticateTokenRoute,
 		routerWrapper("getUsersInfoRoute", async (req: RequestAuthInterface, res, _) => {
 			const { email } = req.user ? req.user : { email: "" };
 			const response = await getUserMeInfoController({ email });
@@ -26,7 +26,7 @@ const initializeRouter = (): Router => {
 
 	router.get(
 		"/",
-		authenticateToken,
+		authenticateTokenRoute,
 		routerWrapper("getUsersInfoRoute", async (req, res, _) => {
 			const response = await getUserInfoController();
 

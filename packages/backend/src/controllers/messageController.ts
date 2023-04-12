@@ -4,16 +4,16 @@ import { Message } from "@chat/common";
 
 const tableName = "common.messages";
 
-export const createMessage = async (message: Message): Promise<number> => {
+export const createMessage = async (message: Message): Promise<Message> => {
 	logger.info("messageController.createMessage");
-	const { rows } = await knexPostgres.raw("INSERT INTO ?? (room_id,user_id,message) VALUES (?, ?, ?) RETURNING id", [
+	const { rows } = await knexPostgres.raw("INSERT INTO ?? (room_id,user_id,message) VALUES (?, ?, ?) RETURNING *", [
 		tableName,
 		message.room_id,
 		message.user_id,
 		message.message,
 	]);
 
-	return rows[0].id;
+	return rows[0] as Message;
 };
 
 // Read all messages

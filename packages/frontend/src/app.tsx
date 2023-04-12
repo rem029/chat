@@ -7,6 +7,7 @@ import { useAppSelector } from "store/hooks";
 
 function App(): JSX.Element {
 	const userState = useAppSelector(getUserState);
+
 	return (
 		<MainContainer>
 			<>

@@ -7,7 +7,7 @@ export const Button = ({
 }: ButtonInterface): JSX.Element => {
 	return (
 		<button
-			className={`border rounded border-solid p-2 bg-${uiColors[bgColor]} text-white ${fontSize}`}
+			className={`border rounded border-solid p-2 bg-${uiColors[bgColor]} text-${uiColors[bgColor]} ${fontSize}`}
 			{...props}
 		>
 			{props.children}

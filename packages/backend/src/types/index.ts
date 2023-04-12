@@ -1,4 +1,6 @@
+import { UserInfo } from "@chat/common";
 import { Request } from "express";
+import { Socket } from "socket.io";
 
 export interface RequestWithMetrics extends Request {
 	startDate?: Date;
@@ -6,8 +8,14 @@ export interface RequestWithMetrics extends Request {
 	endTime?: Date;
 }
 export interface RequestAuthInterface extends RequestWithMetrics {
-	user?: { email: string; password?: string };
+	user?: UserInfo;
 }
+
+export interface SocketAuthInterface extends Socket {
+	user?: UserInfo;
+}
+
+export type SocketNext = (err?: ErrorServer) => void;
 
 export interface ResponseInterface<T> {
 	__typename?: string;
