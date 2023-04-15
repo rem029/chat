@@ -11,7 +11,7 @@ const initializeRouter = (): Router => {
 	router.get(
 		"/me",
 		authenticateTokenRoute,
-		routerWrapper("getUsersInfoRoute", async (req: RequestAuthInterface, res, _) => {
+		routerWrapper("getUserMeInfoController", async (req: RequestAuthInterface, res, _) => {
 			const { email } = req.user ? req.user : { email: "" };
 			const response = await getUserMeInfoController({ email });
 
@@ -27,7 +27,7 @@ const initializeRouter = (): Router => {
 	router.get(
 		"/",
 		authenticateTokenRoute,
-		routerWrapper("getUsersInfoRoute", async (req, res, _) => {
+		routerWrapper("getUserInfoController", async (req, res, _) => {
 			const response = await getUserInfoController();
 
 			handleServerResponse(res, req, 200, {
@@ -41,7 +41,7 @@ const initializeRouter = (): Router => {
 
 	router.post(
 		"/register",
-		routerWrapper("registerRoute", async (req, res, _) => {
+		routerWrapper("addUserController", async (req, res, _) => {
 			const fields = parseBody<{ username: string; password: string }>("registerRoute", req.body, req.headers);
 			const response = await addUserController(fields.username, fields.password);
 

@@ -6,12 +6,16 @@ const tableName = "common.messages";
 
 export const createMessage = async (message: Message): Promise<Message> => {
 	logger.info("messageController.createMessage");
-	const { rows } = await knexPostgres.raw("INSERT INTO ?? (room_id,user_id,message) VALUES (?, ?, ?) RETURNING *", [
-		tableName,
-		message.room_id,
-		message.user_id,
-		message.message,
-	]);
+	const { rows } = await knexPostgres.raw(
+		`
+		INSERT INTO ?? (room_id, user_id, message)
+		VALUES (?, ?, ?)
+		RETURNING
+			*,
+			(SELECT email from common.users WHERE id = user_id) as user_email
+		`,
+		[tableName, message.room_id, message.user_id, message.message]
+	);
 
 	return rows[0] as Message;
 };
@@ -26,10 +30,16 @@ export const getAllMessages = async (): Promise<Message[]> => {
 // Read all messages by room ID
 export const getAllMessagesByRoomID = async (roomID: number): Promise<Message[]> => {
 	logger.info("messageController.getAllMessagesByRoomID");
-	const results = await knexPostgres.raw("SELECT * FROM ?? WHERE room_id = ? ORDER BY created_at DESC LIMIT 50", [
-		tableName,
-		roomID,
-	]);
+	const results = await knexPostgres.raw(
+		`
+			SELECT *,
+			(SELECT email from common.users WHERE id = user_id) as user_email
+			FROM ??
+			WHERE room_id = ?
+			ORDER BY created_at
+			DESC LIMIT 50`,
+		[tableName, roomID]
+	);
 	return results.rows;
 };
 

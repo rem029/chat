@@ -4,7 +4,7 @@ import { ResponseInterface, RequestAuthInterface, ErrorServer } from "../types";
 
 const handleServerLogs = <T>(
 	type: "info" | "error",
-	res: Response,
+	_res: Response,
 	req: RequestAuthInterface,
 	code: number,
 	payload: ResponseInterface<T>
@@ -44,7 +44,7 @@ export const errorHandler: ErrorRequestHandler = (
 	req: RequestAuthInterface,
 	res: Response,
 	// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-	next: NextFunction
+	_next: NextFunction
 ): void => {
 	handleServerError(res, req, err.statusCode, { success: false, message: err.message });
 };
@@ -55,10 +55,10 @@ export type RouterWrapperController = (req: Request, res: Response, next: NextFu
 export const routerWrapper =
 	(name: string, controller: RouterWrapperController) => async (req: Request, res: Response, next: NextFunction) => {
 		try {
-			logger.info(`@${name}`);
+			logger.info(`@${name}.router`);
 			await controller(req, res, next);
 		} catch (error) {
-			logger.error(`@${name} error ${(error as ErrorServer).message}`);
+			logger.error(`@${name}.router error ${(error as ErrorServer).message}`);
 			next(error);
 		}
 	};

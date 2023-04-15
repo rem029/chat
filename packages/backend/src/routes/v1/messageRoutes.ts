@@ -4,7 +4,6 @@ import { getAllMessagesByRoomID, createMessage, updateMessageById } from "../../
 import { authenticateTokenRoute } from "../../middlewares/authToken";
 import { Message } from "@chat/common";
 import { parseBody } from "../../helpers/parseBody";
-import { addUserController } from "controllers/userController";
 
 const initializeRouter = (): Router => {
 	const router = express.Router();
@@ -12,7 +11,7 @@ const initializeRouter = (): Router => {
 	router.get(
 		"/:roomId",
 		authenticateTokenRoute,
-		routerWrapper("getAllMessagesRoute", async (req: Request, res, _) => {
+		routerWrapper("getAllMessagesByRoomID", async (req: Request, res, _) => {
 			const roomId = req.params.roomId as unknown as number;
 			const response = await getAllMessagesByRoomID(roomId);
 
@@ -28,7 +27,7 @@ const initializeRouter = (): Router => {
 	router.post(
 		"/",
 		authenticateTokenRoute,
-		routerWrapper("createMessageRoute", async (req, res, _) => {
+		routerWrapper("createMessage", async (req, res, _) => {
 			const fields = parseBody<Message>("createMessage", req.body, req.headers);
 			const response = await createMessage(fields);
 
@@ -44,7 +43,7 @@ const initializeRouter = (): Router => {
 	router.patch(
 		"/",
 		authenticateTokenRoute,
-		routerWrapper("updateMessageByIdRoute", async (req, res, _) => {
+		routerWrapper("updateMessageById", async (req, res, _) => {
 			const fields = parseBody<Message>("updateMessage", req.body, req.headers);
 			const response = await updateMessageById(fields.id as number, fields);
 

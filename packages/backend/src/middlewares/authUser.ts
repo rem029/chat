@@ -38,7 +38,7 @@ export const authenticateLogin = async (
 	const password = userDecoded[1];
 
 	logger.info(`@middleware authenticateLogin. userId: ${email}`);
-	req.user = { email, password };
+	req.body = { email, password };
 	next();
 };
 

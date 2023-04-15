@@ -1,4 +1,5 @@
 import "dotenv/config";
+import "express-async-errors";
 import { httpServer } from "services/server";
 import { configs } from "configs";
 import { logger } from "utilities/logger";

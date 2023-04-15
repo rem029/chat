@@ -10,8 +10,8 @@ const initializeRouter = (): Router => {
 	router.post(
 		"/",
 		authenticateLogin,
-		routerWrapper("loginRoute", async (req: RequestAuthInterface, res, _) => {
-			const body = req.user ? req.user : { email: "", password: "" };
+		routerWrapper("loginController", async (req: RequestAuthInterface, res, _) => {
+			const body = req.body ? req.body : { email: "", password: "" };
 
 			const response = await loginController(body);
 			handleServerResponse(res, req, 200, {

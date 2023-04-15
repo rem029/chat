@@ -1,12 +1,14 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from ".";
 import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
-import { CounterState } from "slice/temp_counterSlice";
+import { UserState } from "slice/userSlice";
+import { RoomState } from "slice/roomSlice";
 import { Dispatch } from "react";
 
 type UseAppDispatchReturn = () => ThunkDispatch<
 	{
-		counter: CounterState;
+		user: UserState;
+		rooms: RoomState;
 	},
 	undefined,
 	AnyAction

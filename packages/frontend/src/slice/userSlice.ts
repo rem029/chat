@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { UserInfo } from "@chat/common";
-import { deleteToken, getToken, saveToken } from "utilities/storage";
-import axios from "axios";
-import { URL_LOGIN, URL_USER_INFO } from "utilities/constant";
-import { Buffer } from "buffer";
+import { deleteToken, saveToken } from "utilities/storage";
+import { getUserInfo, login } from "api/user";
 
 export type Status = "idle" | "loading" | "failed";
 
@@ -19,31 +17,21 @@ const initialState: UserState = {
 	status: "idle",
 };
 
-export const loginAsync = createAsyncThunk(
-	"user/login",
+export const authUserAsync = createAsyncThunk(
+	"user/auth",
 	async (params: { username: string; password: string }) => {
 		const { username, password } = params;
+		const token = await login(username, password);
+		saveToken(token);
+		return await getUserInfo(token);
+	}
+);
 
-		const tokenResponse = await axios(URL_LOGIN, {
-			method: "POST",
-			headers: {
-				Authorization: `Basic ${Buffer.from(username + ":" + password).toString(
-					"base64"
-				)}`,
-			},
-		});
-
-		saveToken(tokenResponse.data.data.token);
-		const token = getToken();
-
-		const userInfoResponse = await axios(URL_USER_INFO, {
-			method: "GET",
-			headers: {
-				Authorization: `Token ${token}`,
-			},
-		});
-
-		return userInfoResponse.data.data as UserInfo;
+export const authTokenAsync = createAsyncThunk(
+	"user/authToken",
+	async (params: { token: string }) => {
+		const { token } = params;
+		return await getUserInfo(token);
 	}
 );
 
@@ -58,23 +46,40 @@ export const userSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(loginAsync.pending, (state) => {
+			.addCase(authUserAsync.pending, (state) => {
 				state.status = "loading";
 				state.userInfo = undefined;
 				state.error = "";
 				deleteToken();
 			})
-			.addCase(loginAsync.fulfilled, (state, action) => {
+			.addCase(authUserAsync.fulfilled, (state, action) => {
 				state.status = "idle";
 				state.userInfo = action.payload;
 				state.error = "";
 			})
-			.addCase(loginAsync.rejected, (state, action) => {
+			.addCase(authUserAsync.rejected, (state, action) => {
 				state.status = "failed";
 				state.error = action.error.message?.includes("404")
 					? "Username or password invalid."
 					: action.error.message;
 
+				deleteToken();
+			})
+			.addCase(authTokenAsync.pending, (state) => {
+				state.status = "loading";
+				state.error = "";
+			})
+			.addCase(authTokenAsync.fulfilled, (state, action) => {
+				state.status = "idle";
+				state.userInfo = action.payload;
+				state.error = "";
+			})
+			.addCase(authTokenAsync.rejected, (state, action) => {
+				state.status = "failed";
+				state.userInfo = undefined;
+				state.error = action.error.message?.includes("404")
+					? "Token expired or invalid."
+					: action.error.message;
 				deleteToken();
 			});
 	},
