@@ -1,7 +1,7 @@
 import express, { Router } from "express";
-import { routerWrapper } from "handlers";
+import { routerWrapper } from "@handlers";
 import { elapsedTime } from "../../helpers/now";
-import { RequestWithMetrics } from "../../types";
+import { RequestWithMetrics } from "../../interfaces";
 
 const initializeRouter = (): Router => {
 	const router = express.Router();

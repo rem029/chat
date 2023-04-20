@@ -1,8 +1,8 @@
-import { knexPostgres } from "services/database";
-import { logger } from "utilities/logger";
+import { knexPostgres } from "@services/database";
+import { logger } from "@utilities/logger";
 import { Token, UserInfo } from "@chat/common";
-import { generateAccessToken } from "middlewares/authToken";
-import { ErrorServer } from "types";
+import { generateAccessToken } from "@middlewares/authToken";
+import { ErrorServer } from "@interfaces";
 
 const tableName = "common.users";
 

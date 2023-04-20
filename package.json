@@ -11,7 +11,7 @@
   "scripts": {
     "kill-ports": "kill-port --port 3030 && kill-port --port 6060",
     "bootstrap": "lerna bootstrap",
-    "clean": "lerna clean",
+    "clean": "lerna clean && rimraf ./node_modules",
     "start": "lerna run start --parallel --scope @chat/*",
     "start:staging": "lerna run build:run --parallel --scope @chat/backend",
     "start:pm2:staging": "pm2 start server.sh --interpreter=bash --name=chat-app-staging",

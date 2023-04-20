@@ -1,10 +1,10 @@
 import http from "http";
 import { Server as IOServer } from "socket.io";
-import { logger } from "utilities/logger";
+import { logger } from "@utilities/logger";
 
-import { getAllMessagesByRoomID, createMessage } from "controllers/messageController";
-import { authenticateTokenSocket } from "middlewares/authToken";
-import { SocketAuthInterface } from "types";
+import { getAllMessagesByRoomID, createMessage } from "@controllers/messageController";
+import { authenticateTokenSocket } from "@middlewares/authToken";
+import { SocketAuthInterface } from "@interfaces";
 
 export const initializeSocketIO = (httpServer: http.Server): void => {
 	const io = new IOServer(httpServer, {

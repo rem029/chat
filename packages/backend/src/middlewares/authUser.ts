@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
-import { logger } from "utilities/logger";
-import { RequestAuthInterface } from "types";
-import { handleServerError } from "../handlers";
+import { logger } from "@utilities/logger";
+import { RequestAuthInterface } from "@interfaces/index";
+import { handleServerError } from "@handlers/index";
 
 const verifyBodyCreateUser = (reqBody: any): { isAccepted: boolean; message: string } => {
 	const hasEmail = reqBody.email && reqBody.email;

@@ -1,6 +1,6 @@
 import { ErrorRequestHandler, NextFunction, Response, Request } from "express";
 import { logger } from "../utilities/logger";
-import { ResponseInterface, RequestAuthInterface, ErrorServer } from "../types";
+import { ResponseInterface, RequestAuthInterface, ErrorServer } from "@interfaces/index";
 
 const handleServerLogs = <T>(
 	type: "info" | "error",

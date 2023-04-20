@@ -1,6 +1,7 @@
-import { logger } from "utilities/logger";
+import { logger } from "@utilities/logger";
 import knex from "knex";
 import type { Knex } from "knex";
+import "tsconfig-paths";
 
 const DEFAULT_DB_PORT = Number(process.env.DB_PORT) || 5433;
 export const DEFAULT_CONNECTION_CONFIG: Knex.ConnectionConfig = {

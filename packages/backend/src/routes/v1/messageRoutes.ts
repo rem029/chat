@@ -1,7 +1,7 @@
 import express, { Request, Router } from "express";
-import { handleServerResponse, routerWrapper } from "../../handlers";
+import { handleServerResponse, routerWrapper } from "@handlers/index";
 import { getAllMessagesByRoomID, createMessage, updateMessageById } from "../../controllers/messageController";
-import { authenticateTokenRoute } from "../../middlewares/authToken";
+import { authenticateTokenRoute } from "@middlewares/authToken";
 import { Message } from "@chat/common";
 import { parseBody } from "../../helpers/parseBody";
 

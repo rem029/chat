@@ -1,5 +1,5 @@
-import { knexPostgres } from "../services/database";
-import { logger } from "../utilities/logger";
+import { knexPostgres } from "@services/database";
+import { logger } from "@utilities/logger";
 import { Room } from "@chat/common";
 
 const tableName = "common.rooms";
