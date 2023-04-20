@@ -5,6 +5,7 @@ const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const nodeWebExternals = require("webpack-node-externals");
 const { dependencies } = require("./package.json");
+const glob = require("glob");
 
 module.exports = {
 	entry: "./src/index.ts",
@@ -39,7 +40,6 @@ module.exports = {
 			},
 		],
 	},
-	mode: "production",
 	optimization: {
 		minimize: true,
 	},
@@ -49,24 +49,29 @@ module.exports = {
 			patterns: [
 				...Object.keys(dependencies).map((dep) => {
 					dep = dep.includes(".") ? dep + "/" : dep;
-					return {
-						from: `../../node_modules/${dep}`,
-						to: `./node_modules/${dep}`,
-					};
+					const subDeps = glob.sync(`node_modules/${dep}/**/*`, {
+						nodir: true,
+						ignore: "**/node_modules/**",
+					});
+					return [
+						{
+							from: `../../node_modules/${dep}`,
+							to: `./node_modules/${dep}`,
+						},
+						...subDeps.map((subDep) => ({
+							from: `../../${subDep}`,
+							to: `./${subDep}`,
+						})),
+					];
 				}),
-			],
+			].flat(),
 		}),
 	],
 	externals: [
-		{
-			knex: "commonjs knex",
-		},
 		nodeWebExternals({
 			modulesFromFile: {
 				include: ["dependencies"],
 			},
-			// add the following to include symlinks
-			// note: symlinks: false by default
 			symlinks: true,
 		}),
 	],
