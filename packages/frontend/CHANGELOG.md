@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.0.0-alpha.7](https://github.com/rem029/chat/compare/v0.0.0-alpha.6...v0.0.0-alpha.7) (2023-04-21)
+
+
+### Bug Fixes
+
+* **BACKEND_FRONTEND:** updated lerna, disable workspaces, update backend webpack ([90f1d32](https://github.com/rem029/chat/commit/90f1d32288902b0743c9398a349cb2db6b0af0ca))
+
+
+### Features
+
+* **FRONTEND_BACKEND:** added displays room, switch rooms, front-end routing ([a70457b](https://github.com/rem029/chat/commit/a70457be5d504706413484ffe478974930a7f8f6))
+
+
+
+
+
 # [0.0.0-alpha.6](https://github.com/rem029/chat/compare/v0.0.0-alpha.5...v0.0.0-alpha.6) (2023-04-12)
 
 
