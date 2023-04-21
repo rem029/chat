@@ -1,8 +1,10 @@
-import "dotenv/config";
-import type { Knex } from "knex";
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+require("dotenv/config");
 
 const DEFAULT_DB_PORT = Number(process.env.DB_PORT) || 5433;
-export const DEFAULT_CONNECTION_CONFIG: Knex.ConnectionConfig = {
+const DEFAULT_CONNECTION_CONFIG = {
 	host: process.env.DB_HOST || "localhost",
 	user: process.env.DB_USER || "",
 	password: process.env.DB_PW || "",
@@ -10,19 +12,19 @@ export const DEFAULT_CONNECTION_CONFIG: Knex.ConnectionConfig = {
 	debug: true,
 };
 
-export const DEFAULT_KNEX_LOGGER = {
-	warn(message: any) {
+const DEFAULT_KNEX_LOGGER = {
+	warn(message) {
 		console.log(message);
 	},
-	error(message: any) {
+	error(message) {
 		console.log(message);
 	},
-	debug(message: any) {
+	debug(message) {
 		console.log(message);
 	},
 };
 
-export const DEFAULT_KNEX_CONFIG: Knex.Config = {
+const DEFAULT_KNEX_CONFIG = {
 	client: "pg",
 	connection: { ...DEFAULT_CONNECTION_CONFIG, timezone: "utc", port: DEFAULT_DB_PORT },
 	debug: true,
@@ -49,7 +51,7 @@ export const DEFAULT_KNEX_CONFIG: Knex.Config = {
 	},
 };
 
-const config: { [key: string]: Knex.Config } = {
+const config = {
 	development: {
 		...DEFAULT_KNEX_CONFIG,
 		migrations: { directory: ["./migrations/common"], tableName: "knex_migrations", schemaName: "common" },

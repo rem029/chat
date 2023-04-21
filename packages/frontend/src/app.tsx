@@ -1,4 +1,4 @@
-import { Routing } from "components/routing/routes";
+import { Routing } from "./components/routing/routes";
 import { store } from "./store";
 import { Provider } from "react-redux";
 

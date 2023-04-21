@@ -1,5 +1,5 @@
 import { knexPostgres } from "@services/database";
-import { UserInfo } from "@chat/common";
+import { UserInfo } from "@common";
 import { logger } from "@utilities/logger";
 import { ErrorServer } from "@interfaces/index";
 

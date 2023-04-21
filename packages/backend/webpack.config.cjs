@@ -1,20 +1,47 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 const path = require("path");
+const nodeExternals = require("webpack-node-externals");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const nodeWebExternals = require("webpack-node-externals");
-const { dependencies } = require("./package.json");
-const glob = require("glob");
+const WebpackShellPluginNext = require("webpack-shell-plugin-next");
+const { ProgressPlugin } = require("webpack");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
 	entry: "./src/index.ts",
-	output: {
-		filename: "index.js",
-		path: path.resolve(__dirname, "dist"),
+	target: "node",
+	externalsPresets: { node: true },
+	externals: [nodeExternals()],
+	devtool: "inline-source-map",
+	module: {
+		rules: [
+			{
+				test: /\.ts$/,
+				use: [
+					{
+						loader: "babel-loader",
+						options: {
+							presets: [
+								[
+									"@babel/preset-env",
+									{
+										targets: {
+											node: "current",
+										},
+									},
+								],
+							],
+						},
+					},
+					"ts-loader",
+				],
+				exclude: /node_modules/,
+			},
+		],
 	},
 	resolve: {
-		symlinks: true,
 		extensions: [".ts", ".js"],
 		alias: {
 			"@src": path.resolve(__dirname, "src/"),
@@ -27,53 +54,39 @@ module.exports = {
 			"@interfaces": path.resolve(__dirname, "src/interfaces"),
 			"@utilities": path.resolve(__dirname, "src/utilities"),
 			"@handlers": path.resolve(__dirname, "src/handlers"),
+			"@common": path.resolve(__dirname, "../common/src"),
 		},
 	},
-	module: {
-		rules: [
-			{
-				test: /\.ts$/,
-				exclude: /node_modules/,
-				use: {
-					loader: "ts-loader",
-				},
-			},
-		],
+	output: {
+		filename: "bundle.js",
+		path: path.resolve(__dirname, "dist"),
 	},
 	optimization: {
 		minimize: true,
 	},
-	target: "node",
 	plugins: [
 		new CopyWebpackPlugin({
 			patterns: [
-				...Object.keys(dependencies).map((dep) => {
-					dep = dep.includes(".") ? dep + "/" : dep;
-					const subDeps = glob.sync(`node_modules/${dep}/**/*`, {
-						nodir: true,
-						ignore: "**/node_modules/**",
-					});
-					return [
-						{
-							from: `../../node_modules/${dep}`,
-							to: `./node_modules/${dep}`,
-						},
-						...subDeps.map((subDep) => ({
-							from: `../../${subDep}`,
-							to: `./${subDep}`,
-						})),
-					];
-				}),
-			].flat(),
+				{ from: "migrations", to: "migrations" },
+				{ from: "knexfile.js", to: "knexfile.js" },
+				{ from: "package.json", to: "package.json" },
+				{ from: "CHANGELOG.md", to: "CHANGELOG.md" },
+				{ from: "README.md", to: "README.md" },
+			],
 		}),
-	],
-	externals: [
-		nodeWebExternals({
-			modulesFromFile: {
-				include: ["dependencies"],
+		new ProgressPlugin(),
+		new Dotenv(),
+		new WebpackShellPluginNext({
+			onBuildEnd: {
+				scripts: [
+					'echo "Webpack has finished building!"',
+					'echo "Installing packages"',
+					"cd " + path.resolve(__dirname, "dist") + " && yarn install --production && cd ..",
+					'echo "Installing packages done."',
+				],
+				parallel: false,
+				blocking: true,
 			},
-			symlinks: true,
 		}),
 	],
-	devtool: "source-map",
 };

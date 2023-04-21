@@ -1,6 +1,6 @@
 import { knexPostgres } from "@services/database";
 import { logger } from "@utilities/logger";
-import { Message } from "@chat/common";
+import { Message } from "@common";
 
 const tableName = "common.messages";
 

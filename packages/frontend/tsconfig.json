@@ -1,8 +1,13 @@
 {
 	"compilerOptions": {
-		"baseUrl": "./src",
+		"baseUrl": ".",
+		"module": "esnext",
+		"moduleResolution": "node",
 		"paths": {
-			"src/*": ["components", "features", "pages", "store","utilities"]
+			"*": ["src/*"],
+
+			"@common/*": ["../common/src/*"],
+			"@common": ["../common/src/index"]
 		},
 		"target": "es5",
 		"lib": ["dom", "dom.iterable", "esnext"],
@@ -13,12 +18,11 @@
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
 		"noFallthroughCasesInSwitch": true,
-		"module": "esnext",
-		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
-		"jsx": "react-jsx"
+		"jsx": "react-jsx",
+		"skipDefaultLibCheck": true
 	},
 	"include": ["src"]
 }
