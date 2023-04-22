@@ -11,6 +11,5 @@
 # systemctl restart nginx
 # sudo service nginx restart
 
-
 # echo "***Run certbot"
 # certbot --nginx -d chat.rem029.com --redirect --agree-tos --non-interactive
