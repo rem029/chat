@@ -1,6 +1,6 @@
 # DEPLOY
 
-## BACKEND
+## BACKEND DONE
 
 - Update github actions flow as follows
 1. Run webpack
@@ -10,7 +10,7 @@
 5. Copy deploy-backend.sh
 6. Run deploy-backend.sh
 
-## FRONTEND
+## FRONTEND DONE
 
 - Update github actions flow as follows
 1. Run build
@@ -22,6 +22,9 @@
 # FRONTEND
 
 - Update UI
+- Handle changing rooms
+- Auth create user
+- Auth forgot password
 - Runtime Error handling
 
 # BACKEND
@@ -29,6 +32,7 @@
 - Socket IO Error handling
 - Refactor Socket Events (seprate file)
 - Create Socket types
+- Copy SQL on server
 
 # COMMON
 - Create types for socket

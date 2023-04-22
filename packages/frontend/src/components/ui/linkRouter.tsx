@@ -8,8 +8,11 @@ export const LinkRouter = ({
 }: LinkInterface): JSX.Element => {
 	return (
 		<Link
-			className={`text-${uiColors[fontColor]} text-center underline cursor-pointer ${fontSize}`}
 			{...props}
+			className={
+				props.className +
+				` text-${uiColors[fontColor]} text-center underline cursor-pointer ${fontSize}`
+			}
 		>
 			{props.children}
 		</Link>

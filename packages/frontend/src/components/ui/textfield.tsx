@@ -7,8 +7,11 @@ export const TextField = ({
 }: TextFieldInterface): JSX.Element => {
 	return (
 		<input
-			className={`border rounded border-solid p-2 border-${uiColors[borderColor]} {${fontSize}`}
 			{...props}
+			className={
+				props.className +
+				` border rounded border-solid p-2 border-${uiColors[borderColor]} {${fontSize}`
+			}
 		/>
 	);
 };
@@ -20,4 +23,5 @@ interface TextFieldInterface
 			HTMLInputElement
 		> {
 	icon?: JSX.Element;
+	error?: string;
 }

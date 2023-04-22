@@ -25,7 +25,7 @@ yarn add global lerna
 7. on root folder run to install packages:
 
 ```sh
-yarn bootstrap
+yarn install; yarn install:packages:deps
 ```
 
 8. on root folder run to install packages:

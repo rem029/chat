@@ -7,8 +7,11 @@ export const Link = ({
 }: LinkInterface): JSX.Element => {
 	return (
 		<a
-			className={`text-${uiColors[fontColor]} text-center underline cursor-pointer ${fontSize}`}
 			{...props}
+			className={
+				props.className +
+				` text-${uiColors[fontColor]} text-center underline cursor-pointer ${fontSize}`
+			}
 		>
 			{props.children}
 		</a>

@@ -7,8 +7,11 @@ export const Button = ({
 }: ButtonInterface): JSX.Element => {
 	return (
 		<button
-			className={`border rounded border-solid p-2 bg-${uiColors[bgColor]} text-${uiColors[bgColor]} ${fontSize}`}
 			{...props}
+			className={
+				props.className +
+				` border rounded border-solid p-2 bg-${uiColors[bgColor]} text-${uiColors[bgColor]} ${fontSize}`
+			}
 		>
 			{props.children}
 		</button>

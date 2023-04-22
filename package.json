@@ -5,20 +5,11 @@
   "repository": "https://github.com/rem029/chat",
   "scripts": {
     "kill-ports": "kill-port --port 3030 && kill-port --port 6060",
-    "bootstrap": "lerna bootstrap",
+    "install:packages:deps": "lerna exec yarn install --scope @chat/*",
     "clean": "lerna clean && rimraf ./node_modules",
     "start": "lerna run start --parallel --scope @chat/*",
-    "start:staging": "lerna run build:run --parallel --scope @chat/backend",
-    "build": "lerna run build --parallel --scope @chat/*",
-    "build:frontend": "lerna run build --scope @chat/frontend",
-    "build:backend:staging": "lerna run build:staging --scope @chat/backend",
-    "build:backend:production": "lerna run build:production --scope @chat/backend",
     "lint": "lerna run lint --parallel --scope @chat/*",
-    "publish:version": "lerna version --conventional-commits",
-    "migrate-latest": "lerna run migrate-latest --scope @chat/backend",
-    "migrate-rollback": "lerna run migrate-rollback --scope @chat/backend",
-    "cron-add-issue": "pm2 start ./cron/addIssue.js --cron \"0 */12 * * *\" --name=store-add-issue-every-12hr --no-autorestart",
-    "add-issue": "node ./cron/addIssue.js"
+    "publish:version": "lerna version --conventional-commits"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",

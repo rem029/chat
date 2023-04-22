@@ -1,7 +1,7 @@
 import express, { Router } from "express";
 import { handleServerResponse, routerWrapper } from "@handlers/index";
 import { RequestAuthInterface } from "@interfaces/index";
-import { getUserMeInfoController, getUserInfoController, addUserController } from "@controllers/userController";
+import { createUser, checkUserName, getUserInfo, getUserMeInfo } from "@controllers/userController";
 import { authenticateTokenRoute } from "@middlewares/authToken";
 import { parseBody } from "@helpers/parseBody";
 
@@ -11,9 +11,9 @@ const initializeRouter = (): Router => {
 	router.get(
 		"/me",
 		authenticateTokenRoute,
-		routerWrapper("getUserMeInfoController", async (req: RequestAuthInterface, res, _) => {
+		routerWrapper("getUserMeInfo", async (req: RequestAuthInterface, res, _) => {
 			const { email } = req.user ? req.user : { email: "" };
-			const response = await getUserMeInfoController({ email });
+			const response = await getUserMeInfo({ email });
 
 			handleServerResponse(res, req, 200, {
 				__typename: response.__typename,
@@ -27,8 +27,8 @@ const initializeRouter = (): Router => {
 	router.get(
 		"/",
 		authenticateTokenRoute,
-		routerWrapper("getUserInfoController", async (req, res, _) => {
-			const response = await getUserInfoController();
+		routerWrapper("getUserInfo", async (req, res, _) => {
+			const response = await getUserInfo();
 
 			handleServerResponse(res, req, 200, {
 				__typename: response[0].__typename,
@@ -39,11 +39,26 @@ const initializeRouter = (): Router => {
 		})
 	);
 
+	router.get(
+		"/check/:userName",
+		routerWrapper("checkUserName", async (req, res, _) => {
+			const userName = req.params.userName as unknown as string;
+			const response = await checkUserName(userName);
+
+			handleServerResponse(res, req, 200, {
+				__typename: "boolean",
+				success: true,
+				message: "Check username success",
+				data: response,
+			});
+		})
+	);
+
 	router.post(
-		"/register",
-		routerWrapper("addUserController", async (req, res, _) => {
-			const fields = parseBody<{ username: string; password: string }>("registerRoute", req.body, req.headers);
-			const response = await addUserController(fields.username, fields.password);
+		"/create",
+		routerWrapper("createUser", async (req, res, _) => {
+			const fields = parseBody<{ username: string; password: string }>("createUser", req.body, req.headers);
+			const response = await createUser(fields.username, fields.password);
 
 			handleServerResponse(res, req, 200, {
 				__typename: "UserInfo",

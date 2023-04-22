@@ -6,9 +6,9 @@ import { ErrorServer } from "@interfaces";
 
 const tableName = "common.users";
 
-export const loginController = async (body: { email: string; password?: string | undefined }): Promise<Token> => {
+export const login = async (body: { email: string; password?: string | undefined }): Promise<Token> => {
 	const { email, password } = body;
-	logger.info("@loginControllers", email);
+	logger.info("@login", email);
 
 	const results = await knexPostgres.raw(
 		`

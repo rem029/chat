@@ -5,9 +5,9 @@ import { ErrorServer } from "@interfaces/index";
 
 const tableName = "common.users";
 
-export const getUserMeInfoController = async (body: { email: string }): Promise<UserInfo> => {
+export const getUserMeInfo = async (body: { email: string }): Promise<UserInfo> => {
 	const { email } = body;
-	logger.info("@getUserInfoController");
+	logger.info("@getUserMeInfo");
 
 	const results = await knexPostgres.raw(
 		`
@@ -26,8 +26,8 @@ export const getUserMeInfoController = async (body: { email: string }): Promise<
 	return response;
 };
 
-export const getUserInfoController = async (): Promise<UserInfo[]> => {
-	logger.info("@getUserInfoController");
+export const getUserInfo = async (): Promise<UserInfo[]> => {
+	logger.info("@getUserInfo");
 
 	const results = await knexPostgres.raw(
 		`
@@ -44,8 +44,8 @@ export const getUserInfoController = async (): Promise<UserInfo[]> => {
 	return response;
 };
 
-export const addUserController = async (email: string, password: string): Promise<UserInfo> => {
-	logger.info("@addUserController");
+export const createUser = async (email: string, password: string): Promise<UserInfo> => {
+	logger.info("@createUser");
 
 	const results = await knexPostgres.raw(
 		`
@@ -58,4 +58,18 @@ export const addUserController = async (email: string, password: string): Promis
 
 	const response = results.rows[0] as UserInfo;
 	return response;
+};
+
+export const checkUserName = async (email: string): Promise<boolean> => {
+	logger.info("@checkUserName");
+
+	const results = await knexPostgres.raw(
+		`
+			SELECT id FROM ??
+			WHERE email = ?;
+		`,
+		[tableName, email]
+	);
+
+	return results.rows.length > 0;
 };

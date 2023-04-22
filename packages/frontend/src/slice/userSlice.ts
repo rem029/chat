@@ -19,7 +19,7 @@ const initialState: UserState = {
 
 export const authUserAsync = createAsyncThunk(
 	"user/auth",
-	async (params: { username: string; password: string }) => {
+	async (params: { username: string; password?: string }) => {
 		const { username, password } = params;
 		const token = await login(username, password);
 		saveToken(token);

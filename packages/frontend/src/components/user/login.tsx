@@ -1,10 +1,10 @@
-import { Button } from "../ui/button";
-import { Link } from "../ui/link";
-import { TextField } from "../ui/textfield";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserState, authUserAsync } from "../../slice/userSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { LinkRouter } from "components/ui/linkRouter";
+import { Button } from "components/ui/button";
+import { TextField } from "components/ui/textfield";
 
 export const Login = (): JSX.Element => {
 	const [username, setUsername] = useState<string>("");
@@ -47,8 +47,12 @@ export const Login = (): JSX.Element => {
 					Login
 				</Button>
 
-				<Link fontSize="text-xs">Create my account now!</Link>
-				<Link fontSize="text-xs">Forgot password?</Link>
+				<LinkRouter to="/user-register" fontSize="text-xs">
+					Create my account now!
+				</LinkRouter>
+				<LinkRouter to="/user-forgotpassword" fontSize="text-xs">
+					Forgot password?
+				</LinkRouter>
 
 				<div className="flex flex-1 flex-col text-center">
 					<p className="text-sm text-gray-500"> {userState.status}</p>
