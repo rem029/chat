@@ -7,18 +7,18 @@
 	"private": false,
 	"scripts": {
 		"start": "yarn clean-logs && ts-node-dev --project tsconfig.json --no-notify --transpile-only -r tsconfig-paths/register src/index.ts",
-		"build": "yarn build:clean && tsc -b && resolve-tspaths",
 		"build:production": "yarn build:clean && webpack --mode=production --node-env=production",
 		"build:staging": "yarn build:clean && webpack --mode=development --node-env=development",
-		"build:run": "node ./dist/index.js",
+		"build:run": "node bundle.js",
+		"build:run:pm2:staging": "pm2 start bundle.js --name=chat-app-staging",
+		"build:run:pm2:production": "pm2 start bundle.js --name=chat-app-production",
 		"build:clean": "rimraf ./dist",
-		"dev": "nodemon --exec ts-node-dev -r tsconfig-paths/register ./src/index.ts DEBUG=knex:query",
 		"clean-logs": "rimraf ./src/__logs",
 		"lint": "eslint src/**/*.ts",
 		"migrate-latest": "knex migrate:latest",
 		"migrate-rollback": "knex migrate:rollback",
-		"db-create": "set PGPASSWORD=123& createdb -U postgres -p 5433 -O postgres store-db",
-		"db-import": "set PGPASSWORD=123& psql -U postgres -p 5433 store-db < ./sql/store-db.sql"
+		"db-create": "set PGPASSWORD=123& createdb -U postgres -p 5433 -O postgres chat-db",
+		"db-import": "set PGPASSWORD=123& psql -U postgres -p 5433 chat-db < ./sql/chat-db.sql"
 	},
 	"author": "",
 	"license": "ISC",

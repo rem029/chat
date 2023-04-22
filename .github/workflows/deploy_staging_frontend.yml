@@ -54,7 +54,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           source: "packages/frontend/build, packages/frontend/nginx, packages/frontend/deploy-frontend.sh"
           target: ${{ secrets.HOST_PATH }}
-      - name: Run deploy-frontend.sh
+      - name: Run deploy-frontend.sh on server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
