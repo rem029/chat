@@ -1,13 +1,13 @@
-name: Backend build and deploy 
+name: Backend build and deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
       - packages/backend/**
   workflow_dispatch:
-  
-jobs:  
+
+jobs:
   build-and-deploy:
     name: "build and deploy"
     runs-on: ubuntu-latest
@@ -23,8 +23,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-          cache: 'yarn'        
-      - name: Install dependencies
+          cache: "yarn"
       - run: |
           yarn cache clean
           rm -rf node_modules
@@ -44,8 +43,8 @@ jobs:
           envkey_API_MAIL_KEY: ${{secrets.API_MAIL_KEY}}
           envkey_API_MAIL_SENDER: ${{secrets.API_MAIL_SENDER}}
           envkey_API_MAIL_DOMAIN: ${{secrets.API_MAIL_DOMAIN}}
-          envkey_NODE_ENV: 'staging'
-          directory: '.'
+          envkey_NODE_ENV: "staging"
+          directory: "."
           file_name: .env
           fail_on_empty: false
           overwrite: true
@@ -56,7 +55,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: '.env'
+          source: ".env"
           target: ${{ secrets.HOST_PATH }}
           overwrite: true
       - run: yarn build:staging
@@ -67,7 +66,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: 'dist'
+          source: "dist"
           target: ${{ secrets.HOST_PATH }}
           overwrite: true
       - name: Run deploy-backend.sh
@@ -77,7 +76,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: |            
+          script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             PATH=$PATH:/${{secrets.SSH_USER}}/.npm-global/bin
