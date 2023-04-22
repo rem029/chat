@@ -47,16 +47,6 @@ jobs:
           file_name: .env
           fail_on_empty: false
           overwrite: true
-      - name: Deploy backend .env file
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          source: "packages/backend/.env"
-          target: ${{ secrets.HOST_PATH }}
-          overwrite: true
       - run: |
           cd ./packages/backend
           ls
