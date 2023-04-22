@@ -49,7 +49,7 @@ jobs:
           echo API_MAIL_DOMAIN=${{ secrets.API_MAIL_DOMAIN }} >> .env
           echo NODE_ENV=development >> .env
           cat .env
-      - name: Build backend
+      - name: Install backend packages and install
         run: |
           cd ./packages/backend
           ls -a
