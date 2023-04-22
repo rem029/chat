@@ -52,7 +52,7 @@ jobs:
       - name: Build backend
         run: |
           cd ./packages/backend
-          ls
+          ls -a
           yarn install
           yarn lint
           yarn build:staging
