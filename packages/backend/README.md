@@ -10,8 +10,6 @@
 ```sh
 
 yarn install
-yarn db-create
-yarn db-import
 knex migrate:latest
 
 ```
@@ -76,6 +74,13 @@ NODE_ENV=staging
 
 ```
 yarn knex migrate:make <file_name> -x ts
+```
+
+### Setting up DB in server first
+
+```
+set PGPASSWORD=123& createdb -U postgres -p 5433 -O postgres chat-db
+set PGPASSWORD=123& psql -U postgres -p 5433 chat-db < ./sql/chat-db.sql
 ```
 
 ## Author
