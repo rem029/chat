@@ -24,6 +24,11 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
+      - name: Clear cache
+        run: |
+          yarn cache clean
+          rm -rf node_modules
+      - name: Install dependencies
       - run: yarn install
       - run: yarn lint
       - name: Create backend .env file
