@@ -52,7 +52,6 @@ jobs:
       - name: Install backend packages and install
         run: |
           cd ./packages/backend
-          ls -a
           yarn install
           yarn lint
           yarn build:staging

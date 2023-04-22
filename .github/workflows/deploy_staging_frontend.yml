@@ -24,39 +24,36 @@ jobs:
         with:
           node-version: 16
           cache: "yarn"
-      - run: yarn install
+      - name: Install root packages
+        run: |
+          yarn cache clean
+          rm -rf node_modules
+          yarn install
       - name: Create frontend .env file
-        uses: SpicyPizza/create-envfile@v1.3
-        with:
-          envkey_PORT: 1360
-          envkey_REACT_APP_API_URL: "https://api.chat.rem029.com"
-          envkey_REACT_APP_APP_NAME: "CHAT"
-          directory: "packages/frontend/"
-          file_name: .env
-          fail_on_empty: false
-      - run: |
+        run: |
+          cd ./packages/frontend
+          rm -f .env
+
+          echo PORT=1360 >> .env
+          echo REACT_APP_API_URL=https://api.chat.rem029.com >> .env
+          echo REACT_APP_API_URL=CHAT >> .env
+
+          cat .env
+      - name: Install frontend packages and install
+        run: |
           cd ./packages/frontend
           yarn install
           yarn lint
           yarn build
       - run: yarn build
-      - name: Deploy frontend
+      - name: Deploy frontend and nginx to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "packages/frontend/build"
-          target: ${{ secrets.HOST_PATH }}
-      - name: Copy frontend/nginx
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          source: "packages/frontend/nginx"
+          source: "packages/frontend/build, packages/frontend/nginx"
           target: ${{ secrets.HOST_PATH }}
       - name: Run deploy-frontend.sh
         uses: appleboy/ssh-action@master
