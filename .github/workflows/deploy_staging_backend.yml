@@ -24,6 +24,7 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
+      - run: cd ./packages/backend
       - run: yarn install
       - run: yarn lint
       - name: Create backend .env file
@@ -41,7 +42,7 @@ jobs:
           envkey_API_MAIL_SENDER: ${{secrets.API_MAIL_SENDER}}
           envkey_API_MAIL_DOMAIN: ${{secrets.API_MAIL_DOMAIN}}
           envkey_NODE_ENV: 'staging'
-          directory: 'packages/backend/'
+          directory: '.'
           file_name: .env
           fail_on_empty: false
           overwrite: true
@@ -52,10 +53,10 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: 'packages/backend/.env'
+          source: '.env'
           target: ${{ secrets.HOST_PATH }}
           overwrite: true
-      - run: yarn build:backend:staging
+      - run: yarn build:staging
       - name: Deploy backend
         uses: appleboy/scp-action@master
         with:
@@ -63,7 +64,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: 'packages/backend/dist'
+          source: 'dist'
           target: ${{ secrets.HOST_PATH }}
           overwrite: true
       - name: Run deploy-backend.sh

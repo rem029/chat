@@ -24,6 +24,7 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
+      - run: cd ./packages/frontend
       - run: yarn install
       - run: yarn lint
       - name: Create frontend .env file
@@ -35,7 +36,7 @@ jobs:
           directory: 'packages/frontend/'
           file_name: .env
           fail_on_empty: false
-      - run: yarn build:frontend
+      - run: yarn build
       - name: Deploy frontend
         uses: appleboy/scp-action@master
         with:
