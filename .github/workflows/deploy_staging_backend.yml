@@ -43,7 +43,7 @@ jobs:
           envkey_API_MAIL_SENDER: ${{secrets.API_MAIL_SENDER}}
           envkey_API_MAIL_DOMAIN: ${{secrets.API_MAIL_DOMAIN}}
           envkey_NODE_ENV: "development"
-          path: "packages/backend/"
+          path: packages/backend
           file_name: .env
           fail_on_empty: false
           overwrite: true
