@@ -59,6 +59,7 @@ jobs:
           overwrite: true
       - run: |
           cd ./packages/backend
+          ls
           yarn install
           yarn lint
           yarn build:staging
