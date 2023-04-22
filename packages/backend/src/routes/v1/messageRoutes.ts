@@ -1,9 +1,9 @@
 import express, { Request, Router } from "express";
-import { handleServerResponse, routerWrapper } from "handlers/index";
-import { getAllMessagesByRoomID, createMessage, updateMessageById } from "../../controllers/messageController";
-import { authenticateTokenRoute } from "middlewares/authToken";
-import { Message } from "common";
-import { parseBody } from "../../helpers/parseBody";
+import { handleServerResponse, routerWrapper } from "@handlers/index";
+import { getAllMessagesByRoomID, createMessage, updateMessageById } from "@controllers/messageController";
+import { authenticateTokenRoute } from "@middlewares/authToken";
+import { Message } from "@common";
+import { parseBody } from "@helpers/parseBody";
 
 const initializeRouter = (): Router => {
 	const router = express.Router();

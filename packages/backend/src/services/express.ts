@@ -1,9 +1,9 @@
 import express, { Express } from "express";
 import cors from "cors";
 
-import { v1Router } from "routes/v1";
-import { RequestWithMetrics } from "interfaces";
-import { errorHandler } from "handlers";
+import { v1Router } from "@routes/v1";
+import { RequestWithMetrics } from "@interfaces";
+import { errorHandler } from "@handlers";
 
 const initializeExpress = (): Express => {
 	const app = express();

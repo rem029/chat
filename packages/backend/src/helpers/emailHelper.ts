@@ -1,6 +1,6 @@
-// import formData from "form-data";
-// import Mailgun from "mailgun.js";
-import { ErrorServer } from "interfaces/index";
+// import formData from "@form-data";
+// import Mailgun from "@mailgun.js";
+import { ErrorServer } from "@interfaces/index";
 
 export const sendMail = async <T>(body: T): Promise<void> => {
 	try {

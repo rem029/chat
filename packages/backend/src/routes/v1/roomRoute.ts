@@ -1,7 +1,7 @@
 import express, { Request, Router } from "express";
-import { handleServerResponse, routerWrapper } from "handlers/index";
-import { getAllRooms } from "controllers/roomController";
-import { authenticateTokenRoute } from "middlewares/authToken";
+import { handleServerResponse, routerWrapper } from "@handlers/index";
+import { getAllRooms } from "@controllers/roomController";
+import { authenticateTokenRoute } from "@middlewares/authToken";
 
 const initializeRouter = (): Router => {
 	const router = express.Router();

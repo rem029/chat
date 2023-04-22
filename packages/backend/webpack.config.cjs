@@ -70,7 +70,7 @@ module.exports = {
 			patterns: [
 				{ from: "nginx", to: "nginx" },
 				{ from: "deploy-backend.sh", to: "deploy-backend.sh" },
-				{ from: ".env", to: ".env" },
+				{ from: ".env", to: ".env", toType: "file" },
 				{ from: "migrations", to: "migrations" },
 				{ from: "knexfile.js", to: "knexfile.js" },
 				{ from: "package.json", to: "package.json" },

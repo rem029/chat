@@ -1,7 +1,7 @@
-import { knexPostgres } from "services/database";
-import { UserInfo } from "common";
-import { logger } from "utilities/logger";
-import { ErrorServer } from "interfaces/index";
+import { knexPostgres } from "@services/database";
+import { UserInfo } from "@common";
+import { logger } from "@utilities/logger";
+import { ErrorServer } from "@interfaces/index";
 
 const tableName = "common.users";
 

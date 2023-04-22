@@ -3,10 +3,40 @@
 		"target": "es2016",
 		"module": "commonjs",
 		"moduleResolution": "node",
-		"baseUrl": "./src",
+		"baseUrl": ".",
 		"paths": {
-			"@common/*": ["../../common/src/*"],
-			"@common": ["../../common/src/index"]
+			"@src": ["src/index"],
+			"@src/*": ["src/*"],
+
+			"@configs": ["src/configs/index"],
+			"@configs/*": ["src/configs/*"],
+
+			"@controllers": ["src/controllers/index"],
+			"@controllers/*": ["src/controllers/*"],
+
+			"@helpers": ["src/helpers/index"],
+			"@helpers/*": ["src/helpers/*"],
+
+			"@middlewares": ["src/middlewares/index"],
+			"@middlewares/*": ["src/middlewares/*"],
+
+			"@routes": ["src/routes/index"],
+			"@routes/*": ["src/routes/*"],
+
+			"@services": ["src/services/index"],
+			"@services/*": ["src/services/*"],
+
+			"@interfaces": ["src/interfaces/index"],
+			"@interfaces/*": ["src/interfaces/*"],
+
+			"@utilities": ["src/utilities/index"],
+			"@utilities/*": ["src/utilities/*"],
+
+			"@handlers": ["src/handlers/index"],
+			"@handlers/*": ["src/handlers/*"],
+
+			"@common/*": ["../common/src/*"],
+			"@common": ["../common/src/index"]
 		},
 		"allowJs": true,
 		"outDir": "dist",
