@@ -1,10 +1,10 @@
 import "dotenv/config";
 import "express-async-errors";
-import { httpServer } from "@services/server";
-import { configs } from "@configs";
-import { logger } from "@utilities/logger";
-import { initializeSocketIO } from "@services/socket";
-import { DEFAULT_CONNECTION_CONFIG } from "@services/database";
+import { httpServer } from "services/server";
+import { configs } from "configs";
+import { logger } from "utilities/logger";
+import { initializeSocketIO } from "services/socket";
+import { DEFAULT_CONNECTION_CONFIG } from "services/database";
 
 const port = configs.port;
 

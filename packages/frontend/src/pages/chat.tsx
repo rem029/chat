@@ -1,4 +1,4 @@
-import { ChatRoom } from "components/chat/room";
+import { ChatRoom } from "../components/chat/room";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 

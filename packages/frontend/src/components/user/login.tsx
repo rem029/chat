@@ -1,10 +1,10 @@
-import { Button } from "components/ui/button";
-import { Link } from "components/ui/link";
-import { TextField } from "components/ui/textfield";
+import { Button } from "../ui/button";
+import { Link } from "../ui/link";
+import { TextField } from "../ui/textfield";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserState, authUserAsync } from "slice/userSlice";
-import { useAppDispatch, useAppSelector } from "store/hooks";
+import { getUserState, authUserAsync } from "../../slice/userSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 export const Login = (): JSX.Element => {
 	const [username, setUsername] = useState<string>("");

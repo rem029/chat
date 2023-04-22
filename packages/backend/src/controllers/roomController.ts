@@ -1,6 +1,6 @@
-import { knexPostgres } from "@services/database";
-import { logger } from "@utilities/logger";
-import { Room } from "@common";
+import { knexPostgres } from "services/database";
+import { logger } from "utilities/logger";
+import { Room } from "common";
 
 const tableName = "common.rooms";
 

@@ -1,5 +1,5 @@
 import http from "http";
-import { logger } from "@utilities/logger";
+import { logger } from "utilities/logger";
 import { app } from "./express";
 
 const initializeHttpServer = (): http.Server => {

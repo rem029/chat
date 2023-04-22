@@ -1,12 +1,12 @@
-import { Message } from "@chat/common";
-import { Button } from "components/ui/button";
-import { TextField } from "components/ui/textfield";
+import { Message } from "@common";
+import { Button } from "../ui/button";
+import { TextField } from "../ui/textfield";
 import { useEffect, useState } from "react";
-import { getUserState } from "slice/userSlice";
+import { getUserState } from "../../slice/userSlice";
 import { Socket } from "socket.io-client";
-import { useAppSelector } from "store/hooks";
-import io from "utilities/socket";
-import { getToken } from "utilities/storage";
+import { useAppSelector } from "../../store/hooks";
+import io from "../../utilities/socket";
+import { getToken } from "../../utilities/storage";
 
 interface ChatInterface {
 	roomNumber: number;

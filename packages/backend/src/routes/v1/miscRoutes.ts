@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { routerWrapper } from "@handlers";
+import { routerWrapper } from "handlers";
 import { elapsedTime } from "../../helpers/now";
 import { RequestWithMetrics } from "../../interfaces";
 

@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import userReducer from "slice/userSlice";
-import roomReducer from "slice/roomSlice";
+import userReducer from "../slice/userSlice";
+import roomReducer from "../slice/roomSlice";
 
 export const store = configureStore({
 	reducer: {

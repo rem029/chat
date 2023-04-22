@@ -1,8 +1,8 @@
 import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
-import { logger } from "@utilities/logger";
-import { UserInfo, Token } from "@common";
-import { ErrorServer, RequestAuthInterface, SocketAuthInterface, SocketNext } from "@interfaces/index";
+import { logger } from "utilities/logger";
+import { UserInfo, Token } from "common";
+import { ErrorServer, RequestAuthInterface, SocketAuthInterface, SocketNext } from "interfaces/index";
 
 export const generateAccessToken = (payload: object, expiresIn = "24h"): Token => {
 	logger.info(`@generateAccessToken ${payload}`);

@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { loginController } from "@controllers/loginController";
-import { authenticateLogin } from "@middlewares/authUser";
-import { RequestAuthInterface } from "@interfaces/index";
-import { handleServerResponse, routerWrapper } from "@handlers/index";
+import { loginController } from "controllers/loginController";
+import { authenticateLogin } from "middlewares/authUser";
+import { RequestAuthInterface } from "interfaces/index";
+import { handleServerResponse, routerWrapper } from "handlers/index";
 
 const initializeRouter = (): Router => {
 	const router = Router();

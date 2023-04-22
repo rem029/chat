@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { UserInfo } from "@chat/common";
-import { deleteToken, saveToken } from "utilities/storage";
-import { getUserInfo, login } from "api/user";
+import { UserInfo } from "@common";
+import { deleteToken, saveToken } from "../utilities/storage";
+import { getUserInfo, login } from "../api/user";
 
 export type Status = "idle" | "loading" | "failed";
 

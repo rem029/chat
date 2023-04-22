@@ -1,8 +1,7 @@
-import { Routing } from "./components/routing/routes";
-import { store } from "./store";
 import { Provider } from "react-redux";
-
-import "index.css";
+import "./index.css";
+import { store } from "store";
+import { Routing } from "components/routing/routes";
 
 function App(): JSX.Element {
 	return (

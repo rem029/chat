@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { Room } from "@chat/common";
-import { getAllRooms } from "api/room";
+import { Room } from "@common";
+import { getAllRooms } from "../api/room";
 
 export type Status = "idle" | "loading" | "failed";
 

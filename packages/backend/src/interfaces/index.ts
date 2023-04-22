@@ -1,4 +1,4 @@
-import { UserInfo } from "@common";
+import { UserInfo } from "common";
 import { Request } from "express";
 import { Socket } from "socket.io";
 

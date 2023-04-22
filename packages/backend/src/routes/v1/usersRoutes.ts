@@ -1,9 +1,9 @@
 import express, { Router } from "express";
-import { handleServerResponse, routerWrapper } from "@handlers/index";
-import { RequestAuthInterface } from "@interfaces/index";
-import { getUserMeInfoController, getUserInfoController, addUserController } from "@controllers/userController";
-import { authenticateTokenRoute } from "@middlewares/authToken";
-import { parseBody } from "@helpers/parseBody";
+import { handleServerResponse, routerWrapper } from "handlers/index";
+import { RequestAuthInterface } from "interfaces/index";
+import { getUserMeInfoController, getUserInfoController, addUserController } from "controllers/userController";
+import { authenticateTokenRoute } from "middlewares/authToken";
+import { parseBody } from "helpers/parseBody";
 
 const initializeRouter = (): Router => {
 	const router = express.Router();

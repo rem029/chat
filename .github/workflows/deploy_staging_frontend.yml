@@ -25,7 +25,6 @@ jobs:
           node-version: 16
           cache: 'yarn'
       - run: yarn install
-      - run: yarn bootstrap
       - run: yarn lint
       - name: Create frontend .env file
         uses: SpicyPizza/create-envfile@v1.3
@@ -45,4 +44,27 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: 'packages/frontend/build'
-          target: '/var/www/chat.rem029.com/'
+          target: ${{ secrets.HOST_PATH }}
+      - name: Copy frontend/nginx
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: 'packages/frontend/nginx'
+          target: ${{ secrets.HOST_PATH }}
+      - name: Run deploy-frontend.sh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |            
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            PATH=$PATH:/${{secrets.SSH_USER}}/.npm-global/bin
+            cd  ${{ secrets.HOST_PATH }}packages/frontend
+            npm i -g yarn
+            source deploy-frontend.sh

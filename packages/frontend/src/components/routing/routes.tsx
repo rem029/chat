@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProtectedRoute } from "./protectedRoute";
-import { MainContainer } from "components/ui/container/main";
-import { PageNotFound } from "pages/notFound";
-import { Login } from "components/user/login";
-import { PageLobby } from "pages/lobby";
-import { PageChat } from "pages/chat";
+import { MainContainer } from "../ui/container/main";
+import { PageNotFound } from "../../pages/notFound";
+import { Login } from "../user/login";
+import { PageLobby } from "../../pages/lobby";
+import { PageChat } from "../../pages/chat";
 
 export const Routing = (): JSX.Element => {
 	return (

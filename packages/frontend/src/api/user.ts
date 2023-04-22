@@ -1,6 +1,6 @@
-import { UserInfo } from "@chat/common";
+import { UserInfo } from "@common";
 import axios from "axios";
-import { URL_LOGIN, URL_USER_INFO } from "utilities/constant";
+import { URL_LOGIN, URL_USER_INFO } from "../utilities/constant";
 import { Buffer } from "buffer";
 
 export const getUserInfo = async (token: string): Promise<UserInfo> => {

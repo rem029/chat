@@ -1,4 +1,4 @@
-import { LinkRouter } from "components/ui/linkRouter";
+import { LinkRouter } from "../components/ui/linkRouter";
 
 export const PageNotFound = (): JSX.Element => {
 	return (

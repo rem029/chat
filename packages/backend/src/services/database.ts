@@ -1,4 +1,4 @@
-import { logger } from "@utilities/logger";
+import { logger } from "utilities/logger";
 import knex from "knex";
 import type { Knex } from "knex";
 import "tsconfig-paths";

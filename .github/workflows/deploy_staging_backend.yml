@@ -25,7 +25,6 @@ jobs:
           node-version: 16
           cache: 'yarn'
       - run: yarn install
-      - run: yarn bootstrap
       - run: yarn lint
       - name: Create backend .env file
         uses: SpicyPizza/create-envfile@v1.3
@@ -54,9 +53,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: 'packages/backend/.env'
-          target: '/var/www/chat.rem029.com/'
+          target: ${{ secrets.HOST_PATH }}
           overwrite: true
-      - run: yarn build:backend
+      - run: yarn build:backend:staging
       - name: Deploy backend
         uses: appleboy/scp-action@master
         with:
@@ -65,9 +64,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: 'packages/backend/dist'
-          target: '/var/www/chat.rem029.com/'
+          target: ${{ secrets.HOST_PATH }}
           overwrite: true
-      - name: Reload server
+      - name: Run deploy-backend.sh
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -78,7 +77,6 @@ jobs:
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             PATH=$PATH:/${{secrets.SSH_USER}}/.npm-global/bin
-            cd /var/www/chat.rem029.com/
+            cd  ${{ secrets.HOST_PATH }}packages/backend/dist
             npm i -g yarn
-            git pull origin main
-            source deploy.sh
+            source deploy-backend.sh

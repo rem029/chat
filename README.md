@@ -136,6 +136,26 @@ chat/packages/
 ### [common](packages/common/)
   - Shared types between backend and frontend. Mostly used to API response data types.
 
+# GitHub Secret Keys
+
+```
+API_MAIL_DOMAIN=<string>
+API_MAIL_KEY=<string>
+API_MAIL_SENDER=<string>
+API_TOKEN_REFRESH=<generate random string>
+API_TOKEN_SECRET=<generate random string>
+DB_DB
+DB_HOST
+DB_PORT
+DB_PW
+DB_USER
+HOST_PATH=</var/www/{name}/>
+SSH_HOST=<ip>
+SSH_KEY=<cat ~/.ssh/id_rsa>
+SSH_PORT=22
+SSH_USER=<username>
+```
+
 # Author
 
 - Website: https://github.com/rem029

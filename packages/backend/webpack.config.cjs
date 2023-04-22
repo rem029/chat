@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -67,6 +68,9 @@ module.exports = {
 	plugins: [
 		new CopyWebpackPlugin({
 			patterns: [
+				{ from: "nginx", to: "nginx" },
+				{ from: "deploy-backend.sh", to: "deploy-backend.sh" },
+				{ from: ".env", to: ".env" },
 				{ from: "migrations", to: "migrations" },
 				{ from: "knexfile.js", to: "knexfile.js" },
 				{ from: "package.json", to: "package.json" },
@@ -81,8 +85,9 @@ module.exports = {
 				scripts: [
 					'echo "Webpack has finished building!"',
 					'echo "Installing packages"',
-					"cd " + path.resolve(__dirname, "dist") + " && yarn install --production && cd ..",
+					"cd " + path.resolve(__dirname, "dist") + " && yarn install --production",
 					'echo "Installing packages done."',
+					"cd ..",
 				],
 				parallel: false,
 				blocking: true,

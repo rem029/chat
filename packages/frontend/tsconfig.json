@@ -1,16 +1,14 @@
 {
 	"compilerOptions": {
-		"baseUrl": ".",
 		"module": "esnext",
 		"moduleResolution": "node",
-		"paths": {
-			"*": ["src/*"],
-
-			"@common/*": ["../common/src/*"],
-			"@common": ["../common/src/index"]
-		},
 		"target": "es5",
 		"lib": ["dom", "dom.iterable", "esnext"],
+		"baseUrl": "./src",
+		"paths": {
+			"@common": ["../../common/src/index"],
+			"@common/*": ["../../common/src/*"]
+		},
 		"allowJs": true,
 		"skipLibCheck": true,
 		"esModuleInterop": true,
