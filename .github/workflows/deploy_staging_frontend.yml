@@ -36,7 +36,6 @@ jobs:
 
           echo PORT=1360 >> .env
           echo REACT_APP_API_URL=https://api.chat.rem029.com >> .env
-          echo REACT_APP_API_URL=CHAT >> .env
 
           cat .env
       - name: Install frontend packages and install
