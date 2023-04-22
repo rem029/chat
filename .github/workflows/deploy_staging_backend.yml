@@ -24,29 +24,30 @@ jobs:
         with:
           node-version: 16
           cache: "yarn"
-      - run: |
+      - name: Install root packages
+        run: |
           yarn cache clean
           rm -rf node_modules
-      - run: yarn install
+          yarn install
       - name: Create backend .env file
-        uses: SpicyPizza/create-envfile@v1.3
-        with:
-          envkey_DB_HOST: ${{ secrets.DB_HOST }}
-          envkey_DB_PORT: ${{ secrets.DB_PORT }}
-          envkey_DB_USER: ${{ secrets.DB_USER }}
-          envkey_DB_PW: ${{ secrets.DB_PW }}
-          envkey_DB_DB: ${{ secrets.DB_DB }}
-          envkey_PORT: 1370
-          envkey_API_TOKEN_SECRET: ${{ secrets.API_TOKEN_SECRET }}
-          envkey_API_TOKEN_REFRESH: ${{ secrets.API_TOKEN_REFRESH }}
-          envkey_API_MAIL_KEY: ${{secrets.API_MAIL_KEY}}
-          envkey_API_MAIL_SENDER: ${{secrets.API_MAIL_SENDER}}
-          envkey_API_MAIL_DOMAIN: ${{secrets.API_MAIL_DOMAIN}}
-          envkey_NODE_ENV: "development"
-          path: packages/backend
-          file_name: .env
-          fail_on_empty: false
-          overwrite: true
+        run: |
+          cd ./packages/backend
+          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+          echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+          echo DB_USER=${{ secrets.DB_USER }} >> .env
+          echo DB_PW=${{ secrets.DB_PW }} >> .env
+          echo DB_DB=${{ secrets.DB_DB }} >> .env
+
+          echo PORT=1370 >> .env
+
+          echo API_TOKEN_SECRET=${{ secrets.API_TOKEN_SECRET }} >> .env
+          echo API_TOKEN_REFRESH=${{ secrets.API_TOKEN_REFRESH }} >> .env
+
+          echo API_MAIL_KEY=${{ secrets.API_MAIL_KEY }} >> .env
+          echo API_MAIL_SENDER=${{ secrets.API_MAIL_SENDER }} >> .env
+          echo API_MAIL_DOMAIN=${{ secrets.API_MAIL_DOMAIN }} >> .env
+          echo NODE_ENV=development >> .env
+          cat .env
       - name: Build backend
         run: |
           cd ./packages/backend
