@@ -28,7 +28,6 @@ jobs:
           yarn cache clean
           rm -rf node_modules
       - run: yarn install
-      - run: yarn lint
       - name: Create backend .env file
         uses: SpicyPizza/create-envfile@v1.3
         with:
@@ -61,6 +60,7 @@ jobs:
       - run: |
           cd ./packages/backend
           yarn install
+          yarn lint
           yarn build:staging
       - name: Deploy backend
         uses: appleboy/scp-action@master
