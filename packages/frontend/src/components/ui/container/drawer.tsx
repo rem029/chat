@@ -33,15 +33,19 @@ export const DrawerContainer = (): JSX.Element => {
 					<LinkRouter
 						to={`/lobby/${room.id}`}
 						fontSize="text-sm"
-						fontColor="secondary"
 						key={room.id}
+						className="text-primary-light"
 					>
 						{room.name}
 					</LinkRouter>
 				);
 			})}
 
-			<Link fontSize="text-sm" fontColor="secondary" onClick={handleLogoutSubmit}>
+			<Link
+				fontSize="text-sm"
+				onClick={handleLogoutSubmit}
+				className="text-primary-light"
+			>
 				Logout
 			</Link>
 		</div>

@@ -1,5 +1,5 @@
 export const uiColors: Record<UIColors, string> = {
-	primary: "cyan-800",
+	primary: "primary-default",
 	secondary: "white",
 };
 
