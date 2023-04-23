@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { LinkRouter } from "components/ui/linkRouter";
 import { Button } from "components/ui/button";
 import { TextField } from "components/ui/textfield";
+import { Logo } from "components/ui/logo";
 
 export const Login = (): JSX.Element => {
 	const [username, setUsername] = useState<string>("");
@@ -25,40 +26,56 @@ export const Login = (): JSX.Element => {
 	}, [userState.userInfo]);
 
 	return (
-		<div className="flex items-center justify-center h-full">
-			<form className="flex flex-col w-1/2 max-w-sm gap-4 border rounded border-solid border-cyan-800 p-2 pt-4 pb-4 m-auto">
+		<div className="flex items-center justify-center h-full bg-background-dark">
+			<form className="flex flex-col w-10/12 max-w-sm gap-4 rounded-lg  p-2 pt-8 pb-8 m-auto  bg-background-dark shadow-xl">
+				<Logo size="lg" />
+
 				<TextField
 					required
 					type="text"
 					name="username"
-					placeholder="username"
+					placeholder="Username"
 					value={username}
 					onChange={(e) => setUsername(e.target.value)}
+					className="outline-primary"
 				/>
 				<TextField
 					required
 					type="text"
 					name="username"
 					value={password}
-					placeholder="password"
+					placeholder="Password"
 					onChange={(e) => setPassword(e.target.value)}
+					className="outline-primary"
 				/>
-				<Button type="submit" onClick={handleLoginSubmit}>
+				<Button
+					type="submit"
+					onClick={handleLoginSubmit}
+					className="bg-primary-default text-contrastText-dark rounded-lg border-0 font-bold tracking-widest shadow-md"
+				>
 					Login
 				</Button>
 
-				<LinkRouter to="/user-register" fontSize="text-xs">
+				<LinkRouter
+					to="/user-create"
+					fontSize="text-xs"
+					className="text-contrastText-dark"
+				>
 					Create my account now!
 				</LinkRouter>
-				<LinkRouter to="/user-forgotpassword" fontSize="text-xs">
+				<LinkRouter
+					to="/user-forgotpassword"
+					fontSize="text-xs"
+					className="text-contrastText-dark"
+				>
 					Forgot password?
 				</LinkRouter>
 
 				<div className="flex flex-1 flex-col text-center">
-					<p className="text-sm text-gray-500"> {userState.status}</p>
+					<p className="text-sm text-contrastText-dark"> {userState.status}</p>
 
 					{userState.status === "failed" && (
-						<p className="text-sm text-red-500">{userState.error}</p>
+						<p className="text-sm text-error-default">{userState.error}</p>
 					)}
 				</div>
 			</form>

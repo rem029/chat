@@ -9,8 +9,9 @@ import { faker } from "@faker-js/faker";
 import { checkUserName, createUser } from "api/user";
 import { useAsyncWrapper } from "hooks/useAsyncWrapper";
 import { useDebounce } from "hooks/useDebounce";
+import { Logo } from "components/ui/logo";
 
-export const RegisterUser = (): JSX.Element => {
+export const CreateUser = (): JSX.Element => {
 	const [username, setUsername] = useState<string>(faker.internet.userName());
 	const [password, setPassword] = useState<string>("");
 	const [isValidUsername, setIsValidUsername] = useState(true);
@@ -65,22 +66,29 @@ export const RegisterUser = (): JSX.Element => {
 	};
 
 	return (
-		<div className="flex items-center justify-center h-full">
-			<form className="flex flex-col w-1/2 max-w-sm gap-4 border rounded border-solid border-cyan-800 p-2 pt-4 pb-4 m-auto">
+		<div className="flex items-center justify-center h-full bg-background-dark">
+			<form className="flex flex-col w-10/12 max-w-sm gap-4 rounded-lg  p-2 pt-8 pb-8 m-auto  bg-background-dark shadow-xl">
+				<Logo size="lg" />
 				<div className="flex flex-row flex-1 items-center gap-2">
 					<TextField
 						required
 						type="text"
 						name="username"
-						placeholder="username"
+						placeholder="Username"
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
-						className="flex w-full"
+						className="flex w-full outline-primary"
 					/>
-					<Button onClick={handleGenerate} className="text-xs">
+					<Button
+						onClick={handleGenerate}
+						className="shadow-md text-xs bg-info-default text-contrastText-dark border-0"
+					>
 						Generate
 					</Button>
-					<Button onClick={handleCheckUserName} className="text-xs">
+					<Button
+						onClick={handleCheckUserName}
+						className="shadow-md text-xs bg-info-default text-contrastText-dark border-0"
+					>
 						{checkUserNameLoading ? "..." : "Check"}
 					</Button>
 				</div>
@@ -89,26 +97,36 @@ export const RegisterUser = (): JSX.Element => {
 					type="text"
 					name="username"
 					value={password}
-					placeholder="password"
+					placeholder="Create password?"
 					onChange={(e) => setPassword(e.target.value)}
+					className="flex w-full outline-primary"
 				/>
-				<Button type="submit" onClick={handleCreateSubmit}>
+				<p className="text-xs text-info-default text-center">
+					Note: Password not required
+				</p>
+				<Button
+					type="submit"
+					onClick={handleCreateSubmit}
+					className="shadow-md bg-primary-default text-contrastText-dark rounded-lg border-0 font-bold tracking-widest"
+				>
 					Create User
 				</Button>
 
-				<LinkRouter to="/login" fontSize="text-xs">
+				<LinkRouter to="/login" fontSize="text-xs" className="text-contrastText-dark">
 					Login if you have an account
 				</LinkRouter>
 
 				<div className="flex flex-1 flex-col text-center">
-					<p className="text-sm text-gray-500"> {createUserLoading}</p>
+					<p className="text-sm text-contrastText-dark"> {createUserLoading}</p>
 
 					{createUserError && (
-						<p className="text-sm text-red-500">{createUserError.message}</p>
+						<p className="text-sm text-error-default">{createUserError.message}</p>
 					)}
 
 					{!isValidUsername && (
-						<p className="text-sm text-red-500">{"Username not available or invalid"}</p>
+						<p className="text-sm text-error-default">
+							{"Username not available or invalid"}
+						</p>
 					)}
 				</div>
 			</form>

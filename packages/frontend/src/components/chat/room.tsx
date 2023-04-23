@@ -1,31 +1,29 @@
-import { Message } from "@common";
 import { Button } from "../ui/button";
 import { TextField } from "../ui/textfield";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getUserState } from "../../slice/userSlice";
 import { Socket } from "socket.io-client";
 import { useAppSelector } from "../../store/hooks";
 import io from "../../utilities/socket";
 import { getToken } from "../../utilities/storage";
+import { Message } from "@common";
+import { dateFormat } from "helpers/date";
 
 interface ChatInterface {
 	roomNumber: number;
 }
 
 export const ChatRoom = ({ roomNumber }: ChatInterface): JSX.Element => {
-	/**
-	 * #TODO
-	 * Better Handle state
-	 * Create socket customHook??
-	 * Multiple time leaving room
-	 * Better UI Design
-	 */
-
 	const [socket, setSocket] = useState<Socket>();
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [message, setMessage] = useState("");
 	const [status, setStatus] = useState("");
 	const [joined, setJoined] = useState(false);
+	const scrollRef = useRef<HTMLDivElement>(null);
+
+	const messagesReversed = useMemo(() => {
+		return [...messages].reverse();
+	}, [messages]);
 
 	const userState = useAppSelector(getUserState);
 
@@ -36,6 +34,10 @@ export const ChatRoom = ({ roomNumber }: ChatInterface): JSX.Element => {
 			if (socket) socket.disconnect();
 		};
 	}, []);
+
+	useEffect(() => {
+		if (scrollRef) scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+	}, [messages, scrollRef]);
 
 	useEffect(() => {
 		console.log("roomNumber change", roomNumber);
@@ -64,6 +66,7 @@ export const ChatRoom = ({ roomNumber }: ChatInterface): JSX.Element => {
 			socket.open();
 
 			socket.on("messages", (messages: Message[]) => {
+				console.log("msgs received");
 				setMessages(messages);
 			});
 
@@ -71,8 +74,8 @@ export const ChatRoom = ({ roomNumber }: ChatInterface): JSX.Element => {
 				setMessages((prevState) => [message, ...prevState]);
 			});
 
-			socket.on("user joined", (userId: number) => {
-				setStatus(`UserID: ${userId} has joined`);
+			socket.on("user joined", (email: string) => {
+				setStatus(`${email} has joined`);
 			});
 		}
 	}, [socket, joined]);
@@ -90,48 +93,60 @@ export const ChatRoom = ({ roomNumber }: ChatInterface): JSX.Element => {
 				room_id: roomNumber,
 				user_id: userState.userInfo?.id || 0,
 			};
-			console.log("new message sent", newMessage);
 			setMessages((prevState) => [newMessage, ...prevState]);
+			setMessage("");
 		}
 	};
 
 	return (
-		<div className="p-4 flex flex-1 flex-row gap-8">
-			<form className="flex flex-1 flex-col gap-8">
-				<h1 className="text-xl font-bold">{`Chat room ${roomNumber}`}</h1>
-				<p>{userState.userInfo?.email}</p>
+		<div className="flex flex-1 flex-col gap-1 relative h-screen w-full">
+			<div className="flex flex-col gap-1 p-1 box-content fixed bg-background-dark w-full">
+				<h1 className="text-xl font-bold text-contrastText-dark">{`Chat room ${roomNumber}`}</h1>
+				<p className="text-contrastText-dark text-sm">{userState.userInfo?.email}</p>{" "}
+				<p className="text-contrastText-dark text-sm">{status}</p>
+			</div>
 
+			<ul className="flex flex-1 flex-col gap-4 h-full overflow-y-scroll bg-info-light p-2 pb-14 pt-24">
+				{messagesReversed.map((msg, index) => {
+					const isSameUser = msg?.user_email === userState.userInfo?.email;
+
+					return (
+						<li
+							key={`msg${index}`}
+							className={`${
+								isSameUser
+									? "items-start bg-info-light text-contrastText-light"
+									: "items-end bg-secondary-default text-contrastText-light"
+							}  p-2 flex flex-1 flex-col shadow-md rounded-xl`}
+						>
+							<p className="text-xs">
+								<strong>{dateFormat(new Date(msg?.created_at || new Date()))}</strong>
+							</p>
+
+							<p className="text-sm">
+								{isSameUser ? <strong>YOU</strong> : msg.user_email}
+							</p>
+							<p className="text-md p-2">{msg.message}</p>
+						</li>
+					);
+				})}
+				<div ref={scrollRef} />
+			</ul>
+			<form className="flex flex-1 flex-row gap-4 max-h-20 p-4">
 				<TextField
 					placeholder="Message..."
 					onChange={(e) => setMessage(e.target.value)}
 					value={message}
+					className="w-full"
 				/>
-				<Button onClick={handleSubmitMessage} type="submit">
+				<Button
+					onClick={handleSubmitMessage}
+					type="submit"
+					className="text-contrastText-dark border-0 bg-primary-default text-center shadow-md"
+				>
 					SEND
 				</Button>
-
-				<p>{status}</p>
 			</form>
-
-			<ul className="flex flex-1 flex-col gap-4 max-h-screen overflow-y-scroll">
-				{messages.map((msg, index) => {
-					const isSameUser = msg?.user_email === userState.userInfo?.email;
-
-					return (
-						<li key={`msg${index}`}>
-							<p>
-								<strong>
-									{new Date(msg?.created_at || new Date()).toLocaleDateString()}
-								</strong>
-								<span> </span>
-								{new Date(msg?.created_at || new Date()).toLocaleTimeString()}
-							</p>
-							<p>{isSameUser ? "YOU" : msg.user_email}</p>
-							<p>{msg.message}</p>
-						</li>
-					);
-				})}
-			</ul>
 		</div>
 	);
 };

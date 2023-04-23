@@ -19,12 +19,6 @@ export const initializeSocketIO = (httpServer: http.Server): void => {
 	io.on("connection", (socket: SocketAuthInterface) => {
 		logger.info(`User connected ${socket.user?.email}`);
 
-		/**
-		 * #TODO
-		 * Handle socket events on separate file
-		 * Handle socket errors
-		 */
-
 		socket.on("join", async (roomId: number, userId: number, callback: () => void) => {
 			// Join the room
 			socket.join(roomId.toString());
@@ -35,7 +29,7 @@ export const initializeSocketIO = (httpServer: http.Server): void => {
 			socket.emit("messages", messages);
 
 			// Notify the other users in the room that a new user has joined
-			socket.to(roomId.toString()).emit("user joined", userId);
+			socket.to(roomId.toString()).emit("user joined", socket.user?.email);
 			callback();
 		});
 

@@ -5,15 +5,15 @@ import { PageNotFound } from "../../pages/notFound";
 import { Login } from "../user/login";
 import { PageLobby } from "../../pages/lobby";
 import { PageChat } from "../../pages/chat";
-import { RegisterUser } from "components/user/register";
+import { CreateUser } from "components/user/create";
 
 export const Routing = (): JSX.Element => {
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route path="/login" element={<Login />} />
-				<Route path="/user-register" element={<RegisterUser />} />
-				<Route path="/user-forgotpassword" element={<RegisterUser />} />
+				<Route path="/user-create" element={<CreateUser />} />
+				<Route path="/user-forgotpassword" element={<CreateUser />} />
 
 				<Route
 					path="/"

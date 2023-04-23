@@ -10,7 +10,7 @@ export const PageChat = (): JSX.Element => {
 	}, [id]);
 
 	return (
-		<div className="p-4 flex flex-1 flex-row gap-8">
+		<div className="flex flex-1 flex-row gap-8">
 			<ChatRoom roomNumber={selectedRoom} />
 		</div>
 	);

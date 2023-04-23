@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { getRoomState, getAllRoomAsync } from "../../../slice/roomSlice";
 import { getToken } from "../../../utilities/storage";
 import { LinkRouter } from "../linkRouter";
+import { Logo } from "../logo";
 
 export const DrawerContainer = (): JSX.Element => {
 	const dispatch = useAppDispatch();
@@ -24,8 +25,8 @@ export const DrawerContainer = (): JSX.Element => {
 	};
 
 	return (
-		<div className="flex flex-col w-16 h-full items-center gap-8 bg-gray-800 pt-8 pb-8">
-			<h2 className="text-xs text-white">Header</h2>
+		<div className="flex flex-col w-24 h-screen items-center gap-8 bg-info pt-8 pb-8 bg-info-dark">
+			<Logo size="sm" />
 
 			{roomState.rooms?.map((room) => {
 				return (
