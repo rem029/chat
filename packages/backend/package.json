@@ -1,7 +1,7 @@
 {
 	"name": "@chat/backend",
 	"description": "Backend for store project",
-	"version": "0.0.0-alpha.7",
+	"version": "0.0.0-alpha.8",
 	"main": "src/index.js",
 	"type": "commonjs",
 	"private": false,
