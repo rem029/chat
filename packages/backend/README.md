@@ -79,8 +79,9 @@ yarn knex migrate:make <file_name> -x ts
 ### Setting up DB in server first
 
 ```
-set PGPASSWORD=123& createdb -U postgres -p 5433 -O postgres chat-db
-set PGPASSWORD=123& psql -U postgres -p 5433 chat-db < ./sql/chat-db.sql
+su postgres
+set PGPASSWORD=123& createdb -U postgres -p 5432 -O postgres chat-db
+set PGPASSWORD=123& psql -U postgres -p 5432 chat-db < ./sql/chat-db.sql
 ```
 
 ## Author
