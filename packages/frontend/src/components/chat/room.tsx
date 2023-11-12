@@ -36,8 +36,11 @@ export const ChatRoom = ({ roomNumber }: ChatInterface): JSX.Element => {
 	}, []);
 
 	useEffect(() => {
-		if (scrollRef) scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-	}, [messages, scrollRef]);
+		scrollToBottom();
+	}, [messagesReversed, scrollRef]);
+
+	const scrollToBottom = (): void =>
+		scrollRef && scrollRef.current?.scrollIntoView({ behavior: "smooth" });
 
 	useEffect(() => {
 		console.log("roomNumber change", roomNumber);
@@ -95,6 +98,7 @@ export const ChatRoom = ({ roomNumber }: ChatInterface): JSX.Element => {
 			};
 			setMessages((prevState) => [newMessage, ...prevState]);
 			setMessage("");
+			scrollToBottom();
 		}
 	};
 
@@ -106,27 +110,32 @@ export const ChatRoom = ({ roomNumber }: ChatInterface): JSX.Element => {
 				<p className="text-contrastText-dark text-sm">{status}</p>
 			</div>
 
-			<ul className="flex flex-1 flex-col gap-4 h-full overflow-y-scroll bg-info-light p-2 pb-14 pt-24">
+			<ul className="flex flex-1 flex-col gap-4 h-full overflow-y-scroll bg-info-light p-2 pt-24">
 				{messagesReversed.map((msg, index) => {
 					const isSameUser = msg?.user_email === userState.userInfo?.email;
 
 					return (
 						<li
 							key={`msg${index}`}
-							className={`${
-								isSameUser
-									? "items-start bg-info-light text-contrastText-light"
-									: "items-end bg-secondary-default text-contrastText-light"
-							}  p-2 flex flex-1 flex-col shadow-md rounded-xl`}
+							className={`flex flex-1 ${isSameUser ? "justify-start" : "justify-end"}`}
 						>
-							<p className="text-xs">
-								<strong>{dateFormat(new Date(msg?.created_at || new Date()))}</strong>
-							</p>
+							<div
+								className={`${
+									isSameUser
+										? "items-start bg-info-light text-contrastText-light"
+										: "items-end bg-secondary-default text-contrastText-light"
+								}  p-2 flex flex-col shadow-md rounded-xl`}
+								style={{ width: "95%" }}
+							>
+								<p className="text-xs">
+									<strong>{dateFormat(new Date(msg?.created_at || new Date()))}</strong>
+								</p>
 
-							<p className="text-sm">
-								{isSameUser ? <strong>YOU</strong> : msg.user_email}
-							</p>
-							<p className="text-md p-2">{msg.message}</p>
+								<p className="text-sm">
+									{isSameUser ? <strong>YOU</strong> : msg.user_email}
+								</p>
+								<p className="text-md p-2">{msg.message}</p>
+							</div>
 						</li>
 					);
 				})}
